@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sarah's Portfolio</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Dark/Light Mode Toggle -->
+  <button id="mode-toggle">🌙</button>
+  <div class="stars"></div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="logo">Sarah<span>Portfolio</span></div>
+    <div class="menu-toggle" id="menu-toggle">☰</div>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="progress-bar" id="progressBar"></div>
+    <div class="stars"></div>
+  </nav>
+
+<!-- About -->
+<section id="about" class="about reveal">
+    <div class="about-container">
+      <div class="about-text">
+        <h1 class="hover-grow">Hello, I'm Sarah 👩‍💻</h1>
+        <p class="hover-grow">I’m a passionate UI/UX designer and Flutter developer.  
+        I love crafting beautiful interfaces and building smart, user-friendly apps that solve real problems.</p>
+        <div class="cta-buttons">
+          <a href="https://drive.google.com/file/d/109SNtWZf57WiNIGf1zkIudU8IJ-xCciq/view?usp=sharing" class="btn pulse">Download CV</a>
+          <a href="https://wa.me/+963998740489" class="btn btn-alt pulse">Hire Me</a>
+        </div>
+      </div>
+      <div class="about-image">
+        <img src="anime.jpeg" alt="Anime style image"/>
+      </div>
+    </div>
+  </section>
+  <!-- Skills -->
+  <section id="skills" class="skills reveal">
+    <h2>My Skills</h2>
+    <p class="skills-desc">I developed my skills through hands-on projects and continuous learning.  
+    I use libraries like <strong>Material Design</strong>, <strong>TailwindCSS</strong>, and Flutter packages such as <strong>Provider</strong> and <strong>GetX</strong>.</p>
+    <div class="skills-background">
+      <div class="stars"></div>
+      <div class="bubbles"></div>
+    </div>
+    <div class="skills-list">
+      <span><i class="fab fa-figma"></i> UI/UX Design</span>
+      <span><i class="fab fa-flutter"></i> Flutter Development</span>
+      <span><i class="fas fa-database"></i> Firebase Integration</span>
+      <span><i class="fas fa-code"></i> PHP APIs</span>
+      <span><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+    </div>
+  </section>
+<!-- Projects -->
+<section id="projects" class="projects reveal">
+  <h2>My Projects</h2>
+  <div class="project-grid">
+
+    <!-- Project 1 -->
+    <div class="project-card">
+      <div class="project-image">
+        <img src="project1a.jpg" alt="Cafe_Store App"/>
+      </div>
+      <h3>Cafe_Store App</h3>
+      <p>Built with Firebase Authentication and Stripe API for secure payments.</p>
+      <a href="project1.html" class="btn btn-alt">View Project</a>
+    </div>
+    <div class="stars"></div>
+
+    <!-- Project 2 -->
+    <div class="project-card">
+      <div class="project-image">
+        <img src="project2a.jpg" alt="Social_Dating UI"/>
+      </div>
+      <h3>Social_Dating UI</h3>
+      <p>Designed with Figma and implemented using TailwindCSS for responsive layouts.</p>
+      <a href="project2.html" class="btn btn-alt">View Project</a>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card">
+      <div class="project-image">
+        <img src="project3a.png" alt="MyAppointments App"/>
+      </div>
+      <h3>MyAppointments App</h3>
+      <p>Developed using Flutter and Firebase Firestore with push notifications.</p>
+      <a href="project3.html" class="btn btn-alt">View Project</a>
+    </div>
+
+  </div>
+</section>
+ 
+<!-- Contact -->
+<section id="contact" class="contact reveal">
+    <h2>Contact Me</h2>
+    <p class="contact-desc">You can reach me directly by sending a message, or connect through my social accounts.</p>
+    <div class="stars"></div>
+    <div class="contact-container">
+      <!-- Left side: Message form -->
+      <div class="contact-left">
+     <!-- نموذج التواصل -->
+<form id="contact-form" action="https://formspree.io/f/mdkrwwyz" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message</button>
+  </form>
+  
+  <!-- نافذة منبثقة للتأكيد -->
+  <div id="success-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>✅ شكراً لتواصلك</h2>
+      <p>سأرد عليك قريباً!</p>
+    </div>
+  </div>
+<!-- نافذة خطأ -->
+<div id="error-modal" class="modal">
+  <div class="modal-content">
+    <span class="error-close-btn">&times;</span>
+    <h2>❌ حدث خطأ</h2>
+    <p>لم يتم إرسال الرسالة. جرّبي لاحقاً أو تحققي من الإعدادات.</p>
+  </div>
+</div>
+
+      </div>
+     <!-- نافذة منبثقة للتأكيد -->
+<div id="success-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <h2>✅ شكراً لتواصلك</h2>
+    <p>سأرد عليك قريباً!</p>
+  </div>
+</div>
+
+ <!-- Right side: Social accounts -->
+<div class="contact-right">
+    <div class="social-buttons">
+      <a href="https://www.linkedin.com/in/yourusername" target="_blank" class="social-btn linkedin">
+        <i class="fab fa-linkedin"></i>
+        <span>LinkedIn</span>
+      </a>
+      <a href="https://github.com/yourusername" target="_blank" class="social-btn github">
+        <i class="fab fa-github"></i>
+        <span>GitHub</span>
+      </a>
+      <a href="https://www.behance.net/yourusername" target="_blank" class="social-btn behance">
+        <i class="fab fa-behance"></i>
+        <span>Behance</span>
+      </a>
+    </div>
+  </div>
+    </div>
+  </section>
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Sarah Portfolio. All Rights Reserved.<div class="stars"></div></p>
+    <div class="social-icons">
+      <a href="https://www.linkedin.com/in/yourusername" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.behance.net/yourusername" target="_blank"><i class="fab fa-behance"></i></a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script src="https://cdn.emailjs.com/sdk/3.2/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("T-wPrr7Mimqh8aCve"); // استبدلي بـ Public Key من حسابك
+  })();
+</script>
+</body>
+</html>
