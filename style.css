@@ -359,7 +359,7 @@ body {
     display: block;
   }
   /* Slider */
-.slider {
+/*.slider {
     position: relative;
     max-width: 100%;
     overflow: hidden;
@@ -751,3 +751,4 @@ body {
   background: #fff;
   color: #c084fc;
 }
+
