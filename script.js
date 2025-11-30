@@ -71,10 +71,12 @@ window.addEventListener("load", () => {
 
 // ===== Mode toggle =====
 const modeToggle = document.getElementById("mode-toggle");
-modeToggle.addEventListener("click", () => {
-  document.body.classList.toggle("light-mode");
-  modeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
-});
+if (modeToggle) {
+  modeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("light-mode");
+    modeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+  });
+}
 
 // ===== Slider for project images =====
 const sliderState = {};
@@ -89,14 +91,36 @@ function updateSliderTransform(id) {
   const translateX = -safeIndex * slider.clientWidth;
   slides.style.transform = `translateX(${translateX}px)`;
 }
-window.nextSlide = function (id) {
-  sliderState[id] = (sliderState[id] || 0) + 1;
-  updateSliderTransform(id);
-};
-window.prevSlide = function (id) {
-  sliderState[id] = (sliderState[id] || 0) - 1;
-  updateSliderTransform(id);
-};
+
+// ===== Unified slider buttons =====
+function nextSlide(sliderId) {
+  const slider = document.getElementById(sliderId);
+  if (!slider) return;
+  const slides = slider.querySelector('.slides');
+
+  if (sliderState[sliderId] !== undefined) {
+    sliderState[sliderId] = (sliderState[sliderId] || 0) + 1;
+    updateSliderTransform(sliderId);
+  } else {
+    const slideWidth = slider.querySelector('img').clientWidth + 20;
+    slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
+  }
+}
+
+function prevSlide(sliderId) {
+  const slider = document.getElementById(sliderId);
+  if (!slider) return;
+  const slides = slider.querySelector('.slides');
+
+  if (sliderState[sliderId] !== undefined) {
+    sliderState[sliderId] = (sliderState[sliderId] || 0) - 1;
+    updateSliderTransform(sliderId);
+  } else {
+    const slideWidth = slider.querySelector('img').clientWidth + 20;
+    slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+  }
+}
+
 window.addEventListener("load", () => {
   document.querySelectorAll(".slider").forEach((slider) => {
     sliderState[slider.id] = 0;
@@ -115,7 +139,6 @@ const errorModal = document.getElementById("error-modal");
 if (form) {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch(form.action, {
         method: form.method,
@@ -138,32 +161,11 @@ if (form) {
     }
   });
 }
-// ===== Slider buttons fix =====
-function nextSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  const slides = slider.querySelector('.slides');
 
-  // إذا كان عندك نظام translateX (index.html)
-  if (sliderState[sliderId] !== undefined) {
-    sliderState[sliderId] = (sliderState[sliderId] || 0) + 1;
-    updateSliderTransform(sliderId);
-  } else {
-    // إذا كان عندك نظام scrollBy (صفحة المشروع)
-    const slideWidth = slider.querySelector('img').clientWidth + 20;
-    slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
-  }
-}
-
-function prevSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  const slides = slider.querySelector('.slides');
-
-  if (sliderState[sliderId] !== undefined) {
-    sliderState[sliderId] = (sliderState[sliderId] || 0) - 1;
-    updateSliderTransform(sliderId);
-  } else {
-    const slideWidth = slider.querySelector('img').clientWidth + 20;
-    slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-  }
-}
-
+// ===== Close buttons for modals =====
+document.querySelector(".close-btn")?.addEventListener("click", () => {
+  successModal.style.display = "none";
+});
+document.querySelector(".error-close-btn")?.addEventListener("click", () => {
+  errorModal.style.display = "none";
+});
