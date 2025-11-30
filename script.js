@@ -113,7 +113,17 @@ window.addEventListener("load", () => {
     updateSliderTransform(slider.id);
   });
 });
+// ===== Auto-play for sliders =====
+function autoPlaySlider(sliderId, interval = 3000) {
+  setInterval(() => {
+    nextSlide(sliderId);
+  }, interval);
+}
 
+// تشغيل تلقائي للسلايدر project2
+window.addEventListener("load", () => {
+  autoPlaySlider("project2-slider", 3000); // كل 3 ثواني
+});
 window.addEventListener("resize", () => {
   Object.keys(sliderState).forEach(updateSliderTransform);
 });
@@ -155,6 +165,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
