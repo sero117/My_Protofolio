@@ -761,20 +761,20 @@ body {
 }
 
 /* السلايدر */
-.slider {
+/*.slider {
   position: relative;
-  width: 240px;          /* عرض الكارد */
+  width: 240px;          /* عرض الكارد 
   margin: auto;
   overflow: hidden;
 }
-
-.slides {
+*/
+/*.slides {
   display: flex;
   transition: transform 0.5s ease-in-out;
 }
-
+*/
 /* أزرار التقليب */
-.slider button {
+/*.slider button {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -787,4 +787,5 @@ body {
 }
 
 .slider .prev { left: -40px; }
-.slider .next { right: -40px; }
+.slider .next { right: -40px; }*/
+
