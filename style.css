@@ -712,27 +712,25 @@ body {
 
 /* السلايدر */
 
-
 .slider {
   position: relative;
-  width: 600px;          /* ثبتي عرض السلايدر */
+  width: 350px;          /* عرض أصغر مثل حجم سكرين شوت */
   max-width: 100%;
   margin: auto;
-  overflow: hidden;      /* يخفي الصور الزائدة */
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .slides {
-  display: flex;                     /* الصور جنب بعض */
-  transition: transform 0.5s ease;   /* حركة ناعمة */
+  display: flex;
+  transition: transform 0.5s ease;
 }
 
 .slides img {
   flex: 0 0 100%;
   width: 100%;
-  height: auto;          /* خلي الارتفاع يتناسب مع الصورة */
-  max-height: 600px;     /* حد أقصى للارتفاع حتى ما تكبر زيادة */
+  height: auto;          /* يحافظ على نسبة الصورة */
+  max-height: 500px;     /* حد أقصى للارتفاع */
   object-fit: contain;   /* يعرض الصورة كاملة بدون قص */
   border-radius: 12px;
 }
@@ -772,5 +770,6 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
