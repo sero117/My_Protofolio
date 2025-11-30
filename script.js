@@ -75,7 +75,6 @@ if (modeToggle) {
 }
 
 // ===== Slider for project images =====
-// حالة السلايدر
 const sliderState = {}; // حفظ الفهرس لكل سلايدر
 
 function buildDots(sliderId) {
@@ -135,22 +134,19 @@ function prevSlide(sliderId) {
   updateSliderTransform(sliderId);
 }
 
-
 window.addEventListener("load", () => {
   document.querySelectorAll(".slider").forEach(slider => {
     const id = slider.id;
     sliderState[id] = 0;
     buildDots(id);
     updateSliderTransform(id);
-    bindControls(id);
   });
 });
-
-
 
 window.addEventListener("resize", () => {
   Object.keys(sliderState).forEach(updateSliderTransform);
 });
+
 // ===== Contact Form with Formspree =====
 const form = document.getElementById("contact-form");
 const successModal = document.getElementById("success-modal");
@@ -189,14 +185,3 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
-
-
-
-
-
-
-
-
-
-
-
