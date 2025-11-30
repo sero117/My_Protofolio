@@ -97,30 +97,17 @@ function nextSlide(sliderId) {
   const slider = document.getElementById(sliderId);
   if (!slider) return;
   const slides = slider.querySelector('.slides');
-
-  if (sliderState[sliderId] !== undefined) {
-    sliderState[sliderId] = (sliderState[sliderId] || 0) + 1;
-    updateSliderTransform(sliderId);
-  } else {
-    const slideWidth = slider.querySelector('img').clientWidth + 20;
-    slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
-  }
+  const slideWidth = slider.querySelector('img').clientWidth + 20; // عرض الصورة + الهوامش
+  slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
 }
 
 function prevSlide(sliderId) {
   const slider = document.getElementById(sliderId);
   if (!slider) return;
   const slides = slider.querySelector('.slides');
-
-  if (sliderState[sliderId] !== undefined) {
-    sliderState[sliderId] = (sliderState[sliderId] || 0) - 1;
-    updateSliderTransform(sliderId);
-  } else {
-    const slideWidth = slider.querySelector('img').clientWidth + 20;
-    slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-  }
+  const slideWidth = slider.querySelector('img').clientWidth + 20;
+  slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
 }
-
 window.addEventListener("load", () => {
   document.querySelectorAll(".slider").forEach((slider) => {
     sliderState[slider.id] = 0;
@@ -169,3 +156,4 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
