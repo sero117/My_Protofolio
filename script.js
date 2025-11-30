@@ -138,7 +138,19 @@ if (form) {
     }
   });
 }
+function nextSlide(sliderId) {
+  const slider = document.getElementById(sliderId);
+  const slides = slider.querySelector('.slides');
+  const slideWidth = slider.querySelector('img').clientWidth + 20; // حجم الصورة + الهوامش
+  slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
+}
 
+function prevSlide(sliderId) {
+  const slider = document.getElementById(sliderId);
+  const slides = slider.querySelector('.slides');
+  const slideWidth = slider.querySelector('img').clientWidth + 20;
+  slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+}
 // ===== Close buttons for modals =====
 document.querySelector(".close-btn")?.addEventListener("click", () => {
   successModal.style.display = "none";
@@ -146,3 +158,4 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
