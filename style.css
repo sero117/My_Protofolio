@@ -709,6 +709,7 @@ body {
   margin-top: 40px;
 }
 
+/* السلايدر */
 .slider {
   position: relative;
   max-width: 600px;
@@ -723,11 +724,18 @@ body {
   transition: transform 0.5s ease-in-out;
 }
 
+/* الصور داخل السلايدر (كارد) */
 .slides img {
-  width: 100%;
-  border-radius: 12px;
+  width: 220px;          /* عرض أصغر */
+  height: 220px;         /* طول أصغر */
+  object-fit: cover;     /* يملأ المربع بدون تشويه */
+  border-radius: 12px;   /* زوايا ناعمة */
+  margin: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  display: inline-block;
 }
 
+/* أزرار التقليب */
 .prev, .next {
   position: absolute;
   top: 50%;
@@ -747,45 +755,4 @@ body {
 .prev:hover, .next:hover {
   background: #fff;
   color: #c084fc;
-
 }
-/* الكارد */
-.slides img {
-  width: 220px;          /* عرض أصغر */
-  height: 220px;         /* طول أصغر */
-  object-fit: cover;     /* يملأ المربع بدون تشويه */
-  border-radius: 12px;   /* زوايا ناعمة */
-  margin: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  display: inline-block;
-}
-
-/* السلايدر */
-/*.slider {
-  position: relative;
-  width: 240px;          /* عرض الكارد 
-  margin: auto;
-  overflow: hidden;
-}
-*/
-/*.slides {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-*/
-/* أزرار التقليب */
-/*.slider button {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: #6c63ff;
-  color: #fff;
-  border: none;
-  padding: 8px 12px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.slider .prev { left: -40px; }
-.slider .next { right: -40px; }*/
-
