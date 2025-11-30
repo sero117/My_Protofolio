@@ -86,24 +86,32 @@ function buildDots(sliderId) {
   if (!dotsContainer) return;
 
   dotsContainer.innerHTML = "";
-  imgs.forEach((_, i) => {
+
+  const visibleCount = 4; // عدد الصور في الصفحة الواحدة
+  const totalPages = Math.ceil(imgs.length / visibleCount);
+
+  for (let i = 0; i < totalPages; i++) {
     const dot = document.createElement("span");
     dot.className = "dot";
     dot.addEventListener("click", () => {
-      sliderState[sliderId] = i;
+      sliderState[sliderId] = i * visibleCount; // كل دوت يمثل صفحة كاملة
       updateSliderTransform(sliderId);
       updateDots(sliderId);
     });
     dotsContainer.appendChild(dot);
-  });
+  }
 }
 
 function updateDots(sliderId) {
   const dotsContainer = document.getElementById(`${sliderId}-dots`);
   if (!dotsContainer) return;
   const dots = dotsContainer.querySelectorAll(".dot");
+
+  const visibleCount = 4;
   const index = sliderState[sliderId] ?? 0;
-  dots.forEach((d, i) => d.classList.toggle("active", i === index));
+  const currentPage = Math.floor(index / visibleCount);
+
+  dots.forEach((d, i) => d.classList.toggle("active", i === currentPage));
 }
 
 function updateSliderTransform(sliderId) {
@@ -112,25 +120,29 @@ function updateSliderTransform(sliderId) {
   const slides = slider.querySelector(".slides");
   const imgs = slides.querySelectorAll("img");
   const total = imgs.length;
+  const visibleCount = 4;
   let index = sliderState[sliderId] ?? 0;
 
-  // التفاف دائري حقيقي
-  if (index >= total) index = 0;
-  if (index < 0) index = total - 1;
+  // منع الفراغات
+  if (index > total - visibleCount) index = total - visibleCount;
+  if (index < 0) index = 0;
   sliderState[sliderId] = index;
 
   const frameWidth = slider.clientWidth;
-  slides.style.transform = `translateX(${-index * frameWidth}px)`;
+  const shift = (frameWidth / visibleCount) * index;
+  slides.style.transform = `translateX(${-shift}px)`;
 
   updateDots(sliderId);
 }
 
 function nextSlide(sliderId) {
-  sliderState[sliderId] = (sliderState[sliderId] ?? 0) + 1;
+  const visibleCount = 4;
+  sliderState[sliderId] = (sliderState[sliderId] ?? 0) + visibleCount;
   updateSliderTransform(sliderId);
 }
 function prevSlide(sliderId) {
-  sliderState[sliderId] = (sliderState[sliderId] ?? 0) - 1;
+  const visibleCount = 4;
+  sliderState[sliderId] = (sliderState[sliderId] ?? 0) - visibleCount;
   updateSliderTransform(sliderId);
 }
 
