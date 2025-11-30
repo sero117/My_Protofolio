@@ -714,30 +714,28 @@ body {
   position: relative;
   max-width: 600px;
   margin: auto;
-  overflow: hidden; /* مهم */
+  overflow: hidden; /* مهم حتى يظهر التقليب */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .slides {
   display: flex;
-  transition: transform 0.5s ease-in-out; /* مهم */
-}
-/* الصور داخل السلايدر (كارد) */
-.slides img {
-  width: 220px;          /* عرض أصغر */
-  height: 220px;         /* طول أصغر */
-  object-fit: cover;     /* يملأ المربع بدون تشويه */
-  border-radius: 12px;   /* زوايا ناعمة */
-  margin: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  display: inline-block;
+  transition: transform 0.5s ease-in-out;
 }
 
-/* أزرار التقليب */
+.slides img {
+  width: 600px;          /* نفس عرض السلايدر */
+  height: 350px;         /* ارتفاع مناسب */
+  object-fit: cover;
+  border-radius: 12px;
+}
+
 .prev, .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(192,132,252,0.8); /* لون نهدي */
+  background: rgba(192,132,252,0.8);
   border: none;
   padding: 10px;
   cursor: pointer;
@@ -753,4 +751,3 @@ body {
   background: #fff;
   color: #c084fc;
 }
-
