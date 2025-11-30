@@ -79,7 +79,7 @@ if (modeToggle) {
 }
 
 // ===== Slider for project images =====
-const sliderState = {};
+/*const sliderState = {};
 function updateSliderTransform(id) {
   const slider = document.getElementById(id);
   if (!slider) return;
@@ -91,13 +91,13 @@ function updateSliderTransform(id) {
   const translateX = -safeIndex * slider.clientWidth;
   slides.style.transform = `translateX(${translateX}px)`;
 }
-
+*/
 // ===== Unified slider buttons =====
 function nextSlide(sliderId) {
   const slider = document.getElementById(sliderId);
   if (!slider) return;
   const slides = slider.querySelector('.slides');
-  const slideWidth = slider.querySelector('img').clientWidth + 20; // عرض الصورة + الهوامش
+  const slideWidth = slider.querySelector('img').clientWidth + 20;
   slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
 }
 
@@ -108,12 +108,6 @@ function prevSlide(sliderId) {
   const slideWidth = slider.querySelector('img').clientWidth + 20;
   slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
 }
-window.addEventListener("load", () => {
-  document.querySelectorAll(".slider").forEach((slider) => {
-    sliderState[slider.id] = 0;
-    updateSliderTransform(slider.id);
-  });
-});
 window.addEventListener("resize", () => {
   Object.keys(sliderState).forEach(updateSliderTransform);
 });
@@ -156,4 +150,5 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
