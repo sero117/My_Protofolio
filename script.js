@@ -79,39 +79,41 @@ if (modeToggle) {
 }
 
 // ===== Slider for project images =====
-/*const sliderState = {};
+// حالة السلايدر
+const sliderState = {};
+
 function updateSliderTransform(id) {
   const slider = document.getElementById(id);
   if (!slider) return;
   const slides = slider.querySelector(".slides");
-  const imgs = slides ? slides.querySelectorAll("img") : [];
+  const imgs = slides.querySelectorAll("img");
   const index = sliderState[id] || 0;
   const safeIndex = ((index % imgs.length) + imgs.length) % imgs.length;
   sliderState[id] = safeIndex;
   const translateX = -safeIndex * slider.clientWidth;
   slides.style.transform = `translateX(${translateX}px)`;
 }
-*/
-// ===== Unified slider buttons =====
+
 function nextSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  if (!slider) return;
-  const slides = slider.querySelector('.slides');
-  const slideWidth = slider.querySelector('img').clientWidth + 20;
-  slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
+  sliderState[sliderId] = (sliderState[sliderId] || 0) + 1;
+  updateSliderTransform(sliderId);
 }
 
 function prevSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  if (!slider) return;
-  const slides = slider.querySelector('.slides');
-  const slideWidth = slider.querySelector('img').clientWidth + 20;
-  slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+  sliderState[sliderId] = (sliderState[sliderId] || 0) - 1;
+  updateSliderTransform(sliderId);
 }
+
+window.addEventListener("load", () => {
+  document.querySelectorAll(".slider").forEach((slider) => {
+    sliderState[slider.id] = 0;
+    updateSliderTransform(slider.id);
+  });
+});
+
 window.addEventListener("resize", () => {
   Object.keys(sliderState).forEach(updateSliderTransform);
 });
-
 // ===== Contact Form with Formspree =====
 const form = document.getElementById("contact-form");
 const successModal = document.getElementById("success-modal");
@@ -150,5 +152,6 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
