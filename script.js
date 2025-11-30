@@ -80,47 +80,92 @@ if (modeToggle) {
 
 // ===== Slider for project images =====
 // حالة السلايدر
-const sliderState = {};
+const sliderState = {}; // حفظ الفهرس لكل سلايدر
 
-function updateSliderTransform(id) {
-  const slider = document.getElementById(id);
+function buildDots(sliderId) {
+  const slider = document.getElementById(sliderId);
+  if (!slider) return;
+  const slides = slider.querySelector(".slides");
+  const imgs = slides.querySelectorAll("img");
+  const dotsContainer = document.getElementById(`${sliderId}-dots`);
+  if (!dotsContainer) return;
+
+  dotsContainer.innerHTML = "";
+  imgs.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.className = "dot";
+    dot.addEventListener("click", () => {
+      sliderState[sliderId] = i;
+      updateSliderTransform(sliderId);
+      updateDots(sliderId);
+    });
+    dotsContainer.appendChild(dot);
+  });
+}
+
+function updateDots(sliderId) {
+  const dotsContainer = document.getElementById(`${sliderId}-dots`);
+  if (!dotsContainer) return;
+  const dots = dotsContainer.querySelectorAll(".dot");
+  const index = sliderState[sliderId] ?? 0;
+  dots.forEach((d, i) => d.classList.toggle("active", i === index));
+}
+
+function updateSliderTransform(sliderId) {
+  const slider = document.getElementById(sliderId);
   if (!slider) return;
   const slides = slider.querySelector(".slides");
   const imgs = slides.querySelectorAll("img");
   const total = imgs.length;
-  let index = sliderState[id] || 0;
+  let index = sliderState[sliderId] ?? 0;
 
-  // تأكد أن الفهرس دائري (loop)
+  // التفاف دائري حقيقي
   if (index >= total) index = 0;
   if (index < 0) index = total - 1;
+  sliderState[sliderId] = index;
 
-  sliderState[id] = index;
   const frameWidth = slider.clientWidth;
   slides.style.transform = `translateX(${-index * frameWidth}px)`;
+
+  updateDots(sliderId);
 }
 
-function nextSlide(id) {
-  sliderState[id] = (sliderState[id] || 0) + 1;
-  updateSliderTransform(id);
+function nextSlide(sliderId) {
+  sliderState[sliderId] = (sliderState[sliderId] ?? 0) + 1;
+  updateSliderTransform(sliderId);
+}
+function prevSlide(sliderId) {
+  sliderState[sliderId] = (sliderState[sliderId] ?? 0) - 1;
+  updateSliderTransform(sliderId);
 }
 
-function prevSlide(id) {
-  sliderState[id] = (sliderState[id] || 0) - 1;
-  updateSliderTransform(id);
+// Auto-play مع إيقاف مؤقت عند التفاعل
+const autoplayTimers = {};
+function autoPlaySlider(sliderId, interval = 3000) {
+  clearInterval(autoplayTimers[sliderId]);
+  autoplayTimers[sliderId] = setInterval(() => nextSlide(sliderId), interval);
+}
+function pauseAutoPlay(sliderId, resumeAfter = 4000) {
+  clearInterval(autoplayTimers[sliderId]);
+  setTimeout(() => autoPlaySlider(sliderId), resumeAfter);
 }
 
-// تشغيل تلقائي كل 3 ثواني
-function autoPlaySlider(id, interval = 3000) {
-  setInterval(() => {
-    nextSlide(id);
-  }, interval);
+// ربط الإيقاف المؤقت بالأزرار
+function bindControls(sliderId) {
+  const slider = document.getElementById(sliderId);
+  if (!slider) return;
+  slider.querySelector(".prev")?.addEventListener("click", () => pauseAutoPlay(sliderId));
+  slider.querySelector(".next")?.addEventListener("click", () => pauseAutoPlay(sliderId));
 }
 
 window.addEventListener("load", () => {
   document.querySelectorAll(".slider").forEach(slider => {
-    sliderState[slider.id] = 0;
-    updateSliderTransform(slider.id);
-    autoPlaySlider(slider.id, 3000);
+    const id = slider.id;
+    sliderState[id] = 0;
+    buildDots(id);
+    updateSliderTransform(id);
+    bindControls(id);
+    autoPlaySlider(id, 3000);
   });
 });
 
@@ -191,6 +236,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
