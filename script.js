@@ -67,12 +67,28 @@ function animateCounter(id, target) {
 
 // ===== Mode toggle =====
 const modeToggle = document.getElementById("mode-toggle");
+
 if (modeToggle) {
   modeToggle.addEventListener("click", () => {
     document.body.classList.toggle("light-mode");
-    modeToggle.textContent = document.body.classList.contains("light-mode") ? "☀️" : "🌙";
+    const isLight = document.body.classList.contains("light-mode");
+    modeToggle.textContent = isLight ? "☀️" : "🌙";
+    // حفظ الوضعية في LocalStorage
+    localStorage.setItem("theme", isLight ? "light" : "dark");
   });
 }
+
+// عند تحميل الصفحة، نقرأ الوضعية من LocalStorage ونطبقها
+window.addEventListener("load", () => {
+  const theme = localStorage.getItem("theme");
+  if (theme === "light") {
+    document.body.classList.add("light-mode");
+    if (modeToggle) modeToggle.textContent = "☀️";
+  } else {
+    document.body.classList.remove("light-mode");
+    if (modeToggle) modeToggle.textContent = "🌙";
+  }
+});
 
 // ===== Slider for project images =====
 const sliderState = {}; // حفظ الفهرس لكل سلايدر
@@ -197,3 +213,4 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
