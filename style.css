@@ -711,22 +711,27 @@ body {
 }
 
 /* السلايدر */
-
 .slider {
-    position: relative;
-    max-width: 100%;
-    overflow: hidden;
-    border-radius: 12px;
-    margin-bottom: 15px;
-  }
-  .slides {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-  }
-  .slides img {
-    width: 100%;
-    border-radius: 12px;
-  }
+  position: relative;
+  max-width: 100%;       /* السلايدر يأخذ عرض الشاشة */
+  margin: auto;
+  overflow: auto;        /* يسمح بالتمرير إذا الصورة طويلة */
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slides img {
+  width: auto;           /* لا تجبر الصورة على ملء العرض */
+  max-width: 100%;       /* لكن لا تتجاوز عرض الشاشة */
+  height: auto;          /* الطول الطبيعي للصورة */
+  object-fit: contain;   /* يعرض الصورة كاملة بدون قص */
+  border-radius: 12px;
+}
 /* الأزرار */
 .prev, .next {
   position: absolute;
@@ -763,6 +768,7 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
 
