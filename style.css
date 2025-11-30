@@ -730,7 +730,6 @@ body {
   flex: 0 0 100%;
   width: 100%;
   height: auto;          /* يحافظ على نسبة الصورة */
-  max-height: 500px;     /* حد أقصى للارتفاع */
   object-fit: contain;   /* يعرض الصورة كاملة بدون قص */
   border-radius: 12px;
 }
@@ -770,6 +769,7 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
 
