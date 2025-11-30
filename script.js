@@ -80,6 +80,7 @@ if (modeToggle) {
 
 // ===== Slider for project images =====
 // حالة السلايدر
+// حالة السلايدر
 const sliderState = {};
 
 function updateSliderTransform(id) {
@@ -95,30 +96,33 @@ function updateSliderTransform(id) {
 }
 
 function nextSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  const slides = slider.querySelector('.slides');
-  const slideWidth = slider.clientWidth; // عرض السلايدر نفسه
-  slides.scrollBy({ left: slideWidth, behavior: 'smooth' });
+  sliderState[sliderId] = (sliderState[sliderId] || 0) + 1;
+  updateSliderTransform(sliderId);
 }
 
 function prevSlide(sliderId) {
-  const slider = document.getElementById(sliderId);
-  const slides = slider.querySelector('.slides');
-  const slideWidth = slider.clientWidth;
-  slides.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+  sliderState[sliderId] = (sliderState[sliderId] || 0) - 1;
+  updateSliderTransform(sliderId);
 }
-window.addEventListener("load", () => {
-  document.querySelectorAll(".slider").forEach((slider) => {
-    sliderState[slider.id] = 0;
-    updateSliderTransform(slider.id);
-  });
-});
-// ===== Auto-play for sliders =====
+
+// تشغيل تلقائي
 function autoPlaySlider(sliderId, interval = 3000) {
   setInterval(() => {
     nextSlide(sliderId);
   }, interval);
 }
+
+window.addEventListener("load", () => {
+  document.querySelectorAll(".slider").forEach((slider) => {
+    sliderState[slider.id] = 0;
+    updateSliderTransform(slider.id);
+    autoPlaySlider(slider.id, 3000); // تشغيل تلقائي كل 3 ثواني
+  });
+});
+
+window.addEventListener("resize", () => {
+  Object.keys(sliderState).forEach(updateSliderTransform);
+});
 
 // تشغيل تلقائي للسلايدر project2
 window.addEventListener("load", () => {
@@ -165,6 +169,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
