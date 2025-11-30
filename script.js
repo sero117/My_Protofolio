@@ -143,36 +143,11 @@ window.addEventListener("load", () => {
     buildDots(id);
     updateSliderTransform(id);
     bindControls(id);
-    autoPlaySlider(id, 3000);
   });
 });
 
-window.addEventListener("resize", () => {
-  Object.keys(sliderState).forEach(updateSliderTransform);
-});
-// تشغيل تلقائي
-function autoPlaySlider(sliderId, interval = 3000) {
-  setInterval(() => {
-    nextSlide(sliderId);
-  }, interval);
-}
 
-window.addEventListener("load", () => {
-  document.querySelectorAll(".slider").forEach((slider) => {
-    sliderState[slider.id] = 0;
-    updateSliderTransform(slider.id);
-    autoPlaySlider(slider.id, 3000); // تشغيل تلقائي كل 3 ثواني
-  });
-});
 
-window.addEventListener("resize", () => {
-  Object.keys(sliderState).forEach(updateSliderTransform);
-});
-
-// تشغيل تلقائي للسلايدر project2
-window.addEventListener("load", () => {
-  autoPlaySlider("project2-slider", 3000); // كل 3 ثواني
-});
 window.addEventListener("resize", () => {
   Object.keys(sliderState).forEach(updateSliderTransform);
 });
@@ -214,6 +189,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
