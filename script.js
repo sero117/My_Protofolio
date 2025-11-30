@@ -64,10 +64,6 @@ function animateCounter(id, target) {
     el.textContent = count;
   }, 30);
 }
-window.addEventListener("load", () => {
-  animateCounter("counter-projects", 20); // مثال: 20 مشروع
-  animateCounter("counter-years", 5);     // مثال: 5 سنوات خبرة
-});
 
 // ===== Mode toggle =====
 const modeToggle = document.getElementById("mode-toggle");
@@ -236,6 +232,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
