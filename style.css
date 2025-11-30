@@ -715,12 +715,13 @@ body {
   max-width: 600px;
   margin: auto;
   overflow: hidden; /* يخفي الصور الزائدة */
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .slides {
   display: flex;              /* صور جنب بعض */
   transition: transform 0.5s ease-in-out;
-  width: max-content;         /* مهم: يجعل العرض أكبر من السلايدر */
 }
 
 .slides img {
@@ -729,6 +730,7 @@ body {
   object-fit: cover;
   border-radius: 12px;
 }
+
 .prev, .next {
   position: absolute;
   top: 50%;
@@ -749,4 +751,3 @@ body {
   background: #fff;
   color: #c084fc;
 }
-
