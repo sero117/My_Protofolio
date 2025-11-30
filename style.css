@@ -710,45 +710,65 @@ body {
 }
 
 /* السلايدر */
+/* طبقات قد تحجب الأزرار */
+.stars { pointer-events: none; }
+
 .slider {
   position: relative;
-  max-width: 600px;
+  width: 600px;          /* ثبتي عرض السلايدر */
+  max-width: 100%;
   margin: auto;
-  overflow: hidden; /* يخفي الصور الزائدة */
+  overflow: hidden;      /* يخفي الصور الزائدة */
   border-radius: 12px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 }
 
 .slides {
-  display: flex;              /* صور جنب بعض */
-  transition: transform 0.5s ease-in-out;
+  display: flex;                     /* الصور جنب بعض */
+  transition: transform 0.5s ease;   /* حركة ناعمة */
 }
 
 .slides img {
-  width: 600px;               /* نفس عرض السلايدر */
+  flex: 0 0 100%;        /* كل صورة إطار كامل بعرض السلايدر */
+  width: 100%;           /* يساوي عرض .slider */
   height: 350px;
   object-fit: cover;
   border-radius: 12px;
 }
 
+/* الأزرار */
 .prev, .next {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(192,132,252,0.8);
+  z-index: 10;
+  background: rgba(192,132,252,0.9);
   border: none;
   padding: 10px;
   cursor: pointer;
   border-radius: 50%;
-  font-size: 18px;
   color: #fff;
+  font-size: 18px;
 }
-
 .prev { left: 10px; }
 .next { right: 10px; }
+.prev:hover, .next:hover { background: #fff; color: #c084fc; }
 
-.prev:hover, .next:hover {
-  background: #fff;
-  color: #c084fc;
+/* المؤشرات */
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
 }
-
+.dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #bbb;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.dots .dot.active {
+  background: #c084fc;
+}
