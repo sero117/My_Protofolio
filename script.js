@@ -135,24 +135,6 @@ function prevSlide(sliderId) {
   updateSliderTransform(sliderId);
 }
 
-// Auto-play مع إيقاف مؤقت عند التفاعل
-const autoplayTimers = {};
-function autoPlaySlider(sliderId, interval = 3000) {
-  clearInterval(autoplayTimers[sliderId]);
-  autoplayTimers[sliderId] = setInterval(() => nextSlide(sliderId), interval);
-}
-function pauseAutoPlay(sliderId, resumeAfter = 4000) {
-  clearInterval(autoplayTimers[sliderId]);
-  setTimeout(() => autoPlaySlider(sliderId), resumeAfter);
-}
-
-// ربط الإيقاف المؤقت بالأزرار
-function bindControls(sliderId) {
-  const slider = document.getElementById(sliderId);
-  if (!slider) return;
-  slider.querySelector(".prev")?.addEventListener("click", () => pauseAutoPlay(sliderId));
-  slider.querySelector(".next")?.addEventListener("click", () => pauseAutoPlay(sliderId));
-}
 
 window.addEventListener("load", () => {
   document.querySelectorAll(".slider").forEach(slider => {
@@ -232,6 +214,7 @@ document.querySelector(".close-btn")?.addEventListener("click", () => {
 document.querySelector(".error-close-btn")?.addEventListener("click", () => {
   errorModal.style.display = "none";
 });
+
 
 
 
