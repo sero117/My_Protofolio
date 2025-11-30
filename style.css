@@ -713,26 +713,20 @@ body {
 /* السلايدر */
 
 .slider {
-  position: relative;
-  width: 350px;          /* عرض أصغر مثل حجم سكرين شوت */
-  max-width: 100%;
-  margin: auto;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-
-.slides {
-  display: flex;
-  transition: transform 0.5s ease;
-}
-
-.slides img {
-  flex: 0 0 100%;
-  width: 100%;
-  height: auto;          /* يحافظ على نسبة الصورة */
-  object-fit: contain;   /* يعرض الصورة كاملة بدون قص */
-  border-radius: 12px;
-}
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 12px;
+    margin-bottom: 15px;
+  }
+  .slides {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  .slides img {
+    width: 100%;
+    border-radius: 12px;
+  }
 /* الأزرار */
 .prev, .next {
   position: absolute;
@@ -769,6 +763,7 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
 
