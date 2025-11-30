@@ -400,6 +400,7 @@ body {
     animation: moveStars 20s linear infinite;
     border-radius: 16px;
     z-index: -1;
+    
   }
   @keyframes moveStars {
     from { background-position: 0 0; }
@@ -710,8 +711,7 @@ body {
 }
 
 /* السلايدر */
-/* طبقات قد تحجب الأزرار */
-.stars { pointer-events: none; }
+
 
 .slider {
   position: relative;
@@ -772,3 +772,4 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
