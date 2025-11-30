@@ -727,8 +727,8 @@ body {
 }
 
 .slides img {
-  width: 150px;           /* حجم صغير متساوي */
-  height: 150px;
+  width: 150px;           /* حجم أصغر للصورة */
+  height: 150px;          /* نفس الطول والعرض */
   object-fit: cover;      /* يملأ المربع بدون تشويه */
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.2);
@@ -738,7 +738,6 @@ body {
 .slides img:hover {
   transform: scale(1.05); /* تكبير بسيط عند المرور */
 }
-
 
 /* الأزرار */
 .prev, .next {
@@ -776,6 +775,7 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
 
