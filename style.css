@@ -714,16 +714,13 @@ body {
   position: relative;
   max-width: 600px;
   margin: auto;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  overflow: hidden; /* مهم */
 }
 
 .slides {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out; /* مهم */
 }
-
 /* الصور داخل السلايدر (كارد) */
 .slides img {
   width: 220px;          /* عرض أصغر */
@@ -756,3 +753,4 @@ body {
   background: #fff;
   color: #c084fc;
 }
+
