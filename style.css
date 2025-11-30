@@ -729,13 +729,13 @@ body {
 }
 
 .slides img {
-  flex: 0 0 100%;        /* كل صورة إطار كامل بعرض السلايدر */
-  width: 100%;           /* يساوي عرض .slider */
-  height: 350px;
-  object-fit: cover;
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;          /* خلي الارتفاع يتناسب مع الصورة */
+  max-height: 600px;     /* حد أقصى للارتفاع حتى ما تكبر زيادة */
+  object-fit: contain;   /* يعرض الصورة كاملة بدون قص */
   border-radius: 12px;
 }
-
 /* الأزرار */
 .prev, .next {
   position: absolute;
@@ -772,4 +772,5 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
