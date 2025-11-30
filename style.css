@@ -36,6 +36,29 @@ body {
     color: #000;
     border: 2px solid #c084fc;
   }
+/* زر Hire Me */
+.hire-btn {
+  background: #c084fc !important;  /* اللون البنفسجي */
+  color: #000 !important;
+  font-weight: 600;
+  border-radius: 30px;
+  padding: 10px 20px;
+  text-decoration: none;
+  transition: transform 0.3s;
+}
+
+/* حتى في وضع النهار يظل نفس اللون */
+body.light-mode .hire-btn {
+  background: #c084fc !important;
+  color: #000 !important;
+}
+
+/* تأثير hover */
+.hire-btn:hover {
+  transform: scale(1.1);
+  background: #c084fc !important;
+  color: #000 !important;
+}
   body.light-mode h2, 
   body.light-mode h1, 
   body.light-mode p {
@@ -769,6 +792,7 @@ body {
 .dots .dot.active {
   background: #c084fc;
 }
+
 
 
 
