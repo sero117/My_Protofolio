@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Smartphone, Code2, Database, MapPin, Route, GraduationCap, Users, BookOpen } from 'lucide-react'
 
 const projects = [

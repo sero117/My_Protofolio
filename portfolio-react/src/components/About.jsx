@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { GraduationCap, Code2, Smartphone, BarChart3 } from 'lucide-react'
 
 export function About() {
@@ -185,4 +185,3 @@ export function About() {
     </section>
   )
 }
-

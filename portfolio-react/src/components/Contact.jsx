@@ -1,31 +1,54 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, MessageCircle, Download, MapPin, Phone, Send } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
 
 export function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    // Initialize EmailJS (Replace with your actual Public Key)
+    emailjs.init('YOUR_EMAILJS_PUBLIC_KEY')
+  }, [])
 
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+    setError(null)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
+    setError(null)
+
     try {
-      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: { 'Content-Type': 'application/json' }
-      })
+      await emailjs.send(
+        'YOUR_SERVICE_ID', // Replace with your Service ID
+        'YOUR_TEMPLATE_ID', // Replace with your Template ID
+        {
+          to_email: 'sarah117salem01@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+          reply_to: formData.email
+        }
+      )
+
       setSubmitted(true)
       setFormData({ name: '', email: '', message: '' })
       setTimeout(() => setSubmitted(false), 5000)
     } catch (error) {
       console.error('Error:', error)
+      setError('حدث خطأ في الإرسال. تحقق من إعدادات EmailJS')
+    } finally {
+      setLoading(false)
     }
   }
+
   return (
     <section id="contact" className="min-h-screen py-32 px-4 relative overflow-hidden">
       {/* Background Effects */}
@@ -89,6 +112,16 @@ export function Contact() {
                 </motion.div>
               )}
 
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 text-red-700 dark:text-red-300 px-4 py-3 rounded-lg mb-6"
+                >
+                  ✗ {error}
+                </motion.div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <motion.div
@@ -144,16 +177,18 @@ export function Contact() {
                 </motion.div>
 
                 <motion.button
+                  type="submit"
+                  disabled={loading}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
-                  whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 w-full py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/25 flex items-center justify-center gap-3 group"
+                  whileHover={!loading ? { scale: 1.02, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" } : {}}
+                  whileTap={!loading ? { scale: 0.98 } : {}}
+                  className={`${loading ? 'opacity-75 cursor-not-allowed' : ''} bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 w-full py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/25 flex items-center justify-center gap-3 group text-white`}
                 >
                   <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                  Send Message
+                  {loading ? 'جاري الإرسال...' : 'Send Message'}
                 </motion.button>
               </form>
             </div>
@@ -272,4 +307,3 @@ export function Contact() {
     </section>
   )
 }
-

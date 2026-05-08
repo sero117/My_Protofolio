@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { BarChart3, Database, Award, Code, TrendingUp, Users, FileText, PieChart } from 'lucide-react'
 
 const projects = [
@@ -15,7 +15,7 @@ const projects = [
     ],
     description: 'Comprehensive analysis of order data revealing top 10 best-selling products, seasonal demand patterns, and customer segments with highest order frequency.',
     tech: ['Python', 'Pandas', 'Matplotlib', 'Excel'],
-    icon: '📊'
+    icon: 'ðŸ“Š'
   },
   {
     id: 'sales-dashboard',
@@ -30,7 +30,7 @@ const projects = [
     ],
     description: 'Interactive Power BI dashboard showing market dynamism, sales trends, and regional performance with actionable insights for business growth.',
     tech: ['Power BI', 'Data Analysis', 'Business Intelligence'],
-    icon: '📈'
+    icon: 'ðŸ“ˆ'
   },
   {
     id: 'employee-report',
@@ -45,7 +45,7 @@ const projects = [
     ],
     description: 'Comprehensive HR dashboard analyzing workforce distribution across regions with 156 employees, salary metrics, and departmental insights.',
     tech: ['Power BI', 'HR Analytics', 'Data Visualization'],
-    icon: '👥'
+    icon: 'ðŸ‘¥'
   },
   {
     id: 'trip-service',
@@ -60,7 +60,7 @@ const projects = [
     ],
     description: 'Detailed transportation analytics dashboard showing ride performance, cancellation trends, and service quality metrics for operational optimization.',
     tech: ['Looker Studio', 'Google Analytics', 'Data Visualization'],
-    icon: '🚗'
+    icon: 'ðŸš—'
   }
 ]
 
