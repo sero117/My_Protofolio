@@ -55,7 +55,7 @@ export function Hero3D() {
             initial={false}
             animate={{ opacity: open ? 1 : 0, scale: open ? 1 : 0.9 }}
             transition={{ duration: 0.4 }}
-            style={{ pointerEvents: open ? 'none' : 'none' }}
+            style={{ pointerEvents: open ? 'auto' : 'none' }}
           >
             <motion.div
               className="text-center text-white"
@@ -100,4 +100,3 @@ export function Hero3D() {
     </div>
   )
 }
-

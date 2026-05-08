@@ -1,7 +1,31 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, MessageCircle, Download, MapPin, Phone, Send } from 'lucide-react'
+import { useState } from 'react'
 
 export function Contact() {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      setSubmitted(true)
+      setFormData({ name: '', email: '', message: '' })
+      setTimeout(() => setSubmitted(false), 5000)
+    } catch (error) {
+      console.error('Error:', error)
+    }
+  }
   return (
     <section id="contact" className="min-h-screen py-32 px-4 relative overflow-hidden">
       {/* Background Effects */}
@@ -55,12 +79,17 @@ export function Contact() {
                 Send Me a Message
               </h3>
 
-              <form
-                action="mailto:sarah117salem01@gmail.com"
-                method="post"
-                enctype="text/plain"
-                className="space-y-6"
-              >
+              {submitted && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 text-green-700 dark:text-green-300 px-4 py-3 rounded-lg mb-6"
+                >
+                  ✓ تم إرسال رسالتك بنجاح!
+                </motion.div>
+              )}
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -72,6 +101,9 @@ export function Contact() {
                       type="text"
                       name="name"
                       placeholder="Your Name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                       className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300"
                     />
                   </motion.div>
@@ -86,6 +118,9 @@ export function Contact() {
                       type="email"
                       name="email"
                       placeholder="your@email.com"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                       className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300"
                     />
                   </motion.div>
@@ -101,6 +136,9 @@ export function Contact() {
                     rows="6"
                     name="message"
                     placeholder="Tell me about your project, ideas, or just say hello..."
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300 resize-none"
                   />
                 </motion.div>
