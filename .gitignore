@@ -1,7 +1,10 @@
 # dependencies
 node_modules
+portfolio-react/node_modules
 # production
 /build
+dist/
+portfolio-react/dist/
 # misc
 .DS_Store
 .env

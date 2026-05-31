@@ -1,232 +1,255 @@
-import { motion } from 'framer-motion'
-import { Mail, Github, Linkedin, MessageCircle, Download, MapPin, Phone, Send } from 'lucide-react'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Mail, Github, Linkedin, MessageCircle, Download, Send, CheckCircle2, Copy, Check, ExternalLink } from 'lucide-react'
+
+const EMAIL = 'sarah117salem01@gmail.com'
+const WHATSAPP = '963998740489'
+
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <button
+      onClick={handleCopy}
+      className="p-1.5 rounded-lg border border-slate-200 dark:border-white/10 bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 transition-all"
+      title="Copy"
+    >
+      {copied
+        ? <Check className="w-3.5 h-3.5 text-emerald-500" />
+        : <Copy className="w-3.5 h-3.5" style={{ color: 'var(--text-muted)' }} />
+      }
+    </button>
+  )
+}
 
 export function Contact() {
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' })
+  const [sent, setSent] = useState(false)
+
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value })
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const { name, email, subject, message } = form
+    const subj = encodeURIComponent(subject || `Contact from ${name}`)
+    const body = encodeURIComponent(`Hi Sarah,\n\nMy name is ${name}\nEmail: ${email}\n\n${message}`)
+    window.location.href = `mailto:${EMAIL}?subject=${subj}&body=${body}`
+    setSent(true)
+    setTimeout(() => {
+      setSent(false)
+      setForm({ name: '', email: '', subject: '', message: '' })
+    }, 4000)
+  }
+
+  const openWhatsApp = () => {
+    const msg = encodeURIComponent("Hi Sarah, I saw your portfolio and I'd like to connect!")
+    window.open(`https://wa.me/${WHATSAPP}?text=${msg}`, '_blank')
+  }
+
+  const inputClass = "w-full px-4 py-3 rounded-xl text-sm border focus:outline-none transition-all duration-200 focus:ring-2 focus:ring-violet-500/30 bg-white dark:bg-white/[0.04] border-slate-200 dark:border-white/10 focus:border-violet-400 dark:focus:border-violet-500/60"
+  const labelClass = "block text-xs font-semibold mb-1.5 tracking-wide uppercase"
+
   return (
-    <section id="contact" className="min-h-screen py-32 px-4 relative overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50 dark:from-purple-900/20 dark:via-pink-900/20 dark:to-blue-900/20"></div>
-      <div className="absolute top-20 left-10 w-72 h-72 bg-purple-300/30 dark:bg-purple-500/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-300/30 dark:bg-pink-500/20 rounded-full blur-3xl"></div>
+    <section id="contact" className="py-32 px-4 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-[#060d1f] dark:via-[#0b1225] dark:to-[#060d1f] -z-10" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-400/30 dark:via-violet-500/30 to-transparent" />
+      <div className="absolute top-20 left-1/4 w-96 h-96 bg-violet-400/8 dark:bg-violet-600/10 rounded-full blur-[140px] -z-10" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <div className="section-label bg-violet-50 dark:bg-violet-500/10 border border-violet-200 dark:border-violet-500/20 text-violet-600 dark:text-violet-400 mb-4">
+            <Mail className="w-3.5 h-3.5" />
+            <span>Get In Touch</span>
+          </div>
+          <h2 className="section-header text-gradient-violet mb-5">Let's Work Together</h2>
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+            Have a project or a job opportunity in mind? Send me a message or reach out directly via WhatsApp or Email.
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-5 gap-6 lg:gap-8 items-start">
+
+          {/* ── LEFT: Email Form ── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-3 bg-white/80 dark:bg-white/5 backdrop-blur-xl px-6 py-3 rounded-full border border-purple-200/50 dark:border-purple-500/30 mb-8"
-          >
-            <Mail className="w-6 h-6 text-purple-500" />
-            <span className="text-purple-600 dark:text-purple-400 font-semibold">Get In Touch</span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-6xl md:text-8xl lg:text-9xl font-black bg-gradient-to-r from-purple-600 via-pink-500 to-blue-500 bg-clip-text text-transparent mb-8 leading-tight"
-          >
-            Let's Connect
-          </motion.h2>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-slate-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed"
-          >
-            Ready to bring your ideas to life? Let's collaborate and create something extraordinary together.
-          </motion.p>
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2"
+            transition={{ duration: 0.7 }}
+            className="lg:col-span-3"
           >
-            <div className="bg-white/95 dark:bg-white/5 backdrop-blur-2xl p-8 md:p-12 rounded-3xl border border-white/50 dark:border-white/10 shadow-2xl shadow-purple-500/10">
-              <h3 className="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-8">
-                Send Me a Message
+            <div className="card-glow p-8 rounded-2xl">
+              <h3 className="text-lg font-bold mb-1 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                <Mail className="w-5 h-5 text-violet-500" />
+                Send via Email
               </h3>
+              <p className="text-xs mb-6" style={{ color: 'var(--text-muted)' }}>
+                Fill the form — it will open your email client with the message ready to send to{' '}
+                <span className="text-violet-600 dark:text-violet-300 font-medium">{EMAIL}</span>
+              </p>
 
-              <form
-                action="mailto:sarah117salem01@gmail.com"
-                method="post"
-                enctype="text/plain"
-                className="space-y-6"
-              >
-                <div className="grid md:grid-cols-2 gap-6">
+              {/* Success notice */}
+              <AnimatePresence>
+                {sent && (
                   <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
+                    initial={{ opacity: 0, y: -8, height: 0 }}
+                    animate={{ opacity: 1, y: 0, height: 'auto' }}
+                    exit={{ opacity: 0, y: -8, height: 0 }}
+                    className="flex items-start gap-3 p-4 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/25 mb-5 overflow-hidden"
                   >
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Your Name"
-                      className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300"
-                    />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">Your email client is opening!</p>
+                      <p className="text-xs text-emerald-600 dark:text-emerald-500 mt-0.5">If nothing opened, copy the email and write manually.</p>
+                    </div>
                   </motion.div>
+                )}
+              </AnimatePresence>
 
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.2 }}
-                  >
-                    <input
-                      type="email"
-                      name="email"
-                      placeholder="your@email.com"
-                      className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300"
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className={labelClass} style={{ color: 'var(--text-muted)' }}>Name *</label>
+                    <input type="text" name="name" value={form.name} onChange={handleChange} required
+                      placeholder="Your full name"
+                      className={inputClass}
+                      style={{ color: 'var(--text-primary)' }}
                     />
-                  </motion.div>
+                  </div>
+                  <div>
+                    <label className={labelClass} style={{ color: 'var(--text-muted)' }}>Your Email *</label>
+                    <input type="email" name="email" value={form.email} onChange={handleChange} required
+                      placeholder="you@company.com"
+                      className={inputClass}
+                      style={{ color: 'var(--text-primary)' }}
+                    />
+                  </div>
                 </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                >
-                  <textarea
-                    rows="6"
-                    name="message"
-                    placeholder="Tell me about your project, ideas, or just say hello..."
-                    className="w-full p-4 bg-white/80 dark:bg-white/5 dark:text-white border-2 border-purple-200/50 dark:border-purple-500/30 rounded-2xl focus:border-purple-400 focus:outline-none transition-all duration-300 text-lg placeholder-gray-500 hover:border-purple-300 resize-none"
+                <div>
+                  <label className={labelClass} style={{ color: 'var(--text-muted)' }}>Subject</label>
+                  <input type="text" name="subject" value={form.subject} onChange={handleChange}
+                    placeholder="Job opportunity / Project / General inquiry"
+                    className={inputClass}
+                    style={{ color: 'var(--text-primary)' }}
                   />
-                </motion.div>
+                </div>
 
-                <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
-                  whileTap={{ scale: 0.98 }}
-                  className="bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 w-full py-5 text-xl font-bold rounded-2xl transition-all duration-300 shadow-xl shadow-purple-500/25 flex items-center justify-center gap-3 group"
-                >
-                  <Send className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
-                  Send Message
+                <div>
+                  <label className={labelClass} style={{ color: 'var(--text-muted)' }}>Message *</label>
+                  <textarea name="message" value={form.message} onChange={handleChange} required rows={5}
+                    placeholder="Tell me about the role, project, or how I can help..."
+                    className={`${inputClass} resize-none`}
+                    style={{ color: 'var(--text-primary)' }}
+                  />
+                </div>
+
+                <motion.button type="submit" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                  className="btn-primary w-full justify-center py-3.5 text-base">
+                  <Send className="w-4 h-4" />
+                  Send via Email Client
                 </motion.button>
               </form>
             </div>
           </motion.div>
 
-          {/* Contact Info */}
+          {/* ── RIGHT: Direct Contact ── */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="space-y-6"
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="lg:col-span-2 flex flex-col gap-4"
           >
-            {/* Quick Contact Cards */}
-            <div className="bg-white/95 dark:bg-white/5 backdrop-blur-2xl p-8 rounded-3xl border border-white/50 dark:border-white/10 shadow-2xl shadow-green-500/10">
-              <h4 className="text-2xl font-bold bg-gradient-to-r from-green-500 to-emerald-500 bg-clip-text text-transparent mb-6 flex items-center gap-3">
-                <MessageCircle className="w-6 h-6" />
-                Quick Contact
-              </h4>
-
-              <motion.a
-                href="https://wa.me/+963998740489"
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 hover:from-green-100 hover:to-emerald-100 dark:hover:from-green-800/30 dark:hover:to-emerald-800/30 transition-all duration-300 border border-green-200/50 dark:border-green-500/30 group"
-              >
-                <div className="p-3 bg-green-500 rounded-xl group-hover:scale-110 transition-transform">
-                  <MessageCircle className="w-6 h-6 text-white" />
+            {/* WhatsApp */}
+            <div className="card-glow p-5 rounded-2xl border border-emerald-200 dark:border-emerald-500/20 bg-emerald-50/50 dark:bg-emerald-500/5">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                  <MessageCircle className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <div>
-                  <div className="font-bold text-slate-900 dark:text-white">WhatsApp</div>
-                  <div className="text-slate-600 dark:text-gray-400 text-sm">+963 998 740 489</div>
+                  <div className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>WhatsApp</div>
+                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>Fastest way to reach me</div>
                 </div>
-              </motion.a>
+              </div>
+              <div className="flex items-center justify-between bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/8 rounded-xl px-4 py-2.5 mb-3">
+                <span className="text-emerald-700 dark:text-emerald-300 text-sm font-mono">+963 998 740 489</span>
+                <CopyButton text="+963998740489" />
+              </div>
+              <motion.button onClick={openWhatsApp} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-white font-semibold text-sm transition-all">
+                <MessageCircle className="w-4 h-4" />
+                Chat on WhatsApp
+              </motion.button>
             </div>
 
-            {/* Social Links */}
-            <div className="bg-white/95 dark:bg-white/5 backdrop-blur-2xl p-8 rounded-3xl border border-white/50 dark:border-white/10 shadow-2xl shadow-blue-500/10">
-              <h4 className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent mb-6 flex items-center gap-3">
-                <Github className="w-6 h-6" />
-                Find Me Online
-              </h4>
+            {/* Email direct */}
+            <div className="card-glow p-5 rounded-2xl">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl bg-violet-100 dark:bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-violet-600 dark:text-violet-400" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>Email</div>
+                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>I reply within 24 hours</div>
+                </div>
+              </div>
+              <div className="flex items-center justify-between bg-white dark:bg-white/[0.04] border border-slate-200 dark:border-white/8 rounded-xl px-4 py-2.5 mb-3">
+                <span className="text-violet-700 dark:text-violet-300 text-xs font-mono truncate pr-2">{EMAIL}</span>
+                <CopyButton text={EMAIL} />
+              </div>
+              <a href={`mailto:${EMAIL}`}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-semibold text-sm transition-all">
+                <Mail className="w-4 h-4" />
+                Open Email App
+              </a>
+            </div>
 
-              <div className="grid grid-cols-1 gap-4">
-                <motion.a
-                  href="https://github.com/sero117"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-gray-50 to-slate-50 dark:from-gray-900/20 dark:to-slate-900/20 hover:from-gray-100 hover:to-slate-100 dark:hover:from-gray-800/30 dark:hover:to-slate-800/30 transition-all duration-300 border border-gray-200/50 dark:border-gray-500/30 group"
-                >
-                  <div className="p-3 bg-gray-800 rounded-xl group-hover:scale-110 transition-transform">
-                    <Github className="w-6 h-6 text-white" />
+            {/* LinkedIn + GitHub */}
+            <div className="card-glow p-5 rounded-2xl">
+              <div className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: 'var(--text-muted)' }}>
+                Also Find Me On
+              </div>
+              <div className="space-y-2.5">
+                <a href="https://www.linkedin.com/in/sarah-salem-5a35783b2" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 hover:border-blue-400 dark:hover:border-blue-400/40 transition-all group">
+                  <Linkedin className="w-4 h-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>LinkedIn</div>
+                    <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>Sarah Salem</div>
                   </div>
-                  <div>
-                    <div className="font-bold text-slate-900 dark:text-white">GitHub</div>
-                    <div className="text-slate-600 dark:text-gray-400 text-sm">@sero117</div>
+                  <ExternalLink className="w-3.5 h-3.5 text-blue-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                </a>
+                <a href="https://github.com/sero117" target="_blank" rel="noopener noreferrer"
+                  className="flex items-center gap-3 p-3 rounded-xl bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:border-slate-400 dark:hover:border-white/25 transition-all group">
+                  <Github className="w-4 h-4 flex-shrink-0" style={{ color: 'var(--text-secondary)' }} />
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold" style={{ color: 'var(--text-primary)' }}>GitHub</div>
+                    <div className="text-[11px]" style={{ color: 'var(--text-muted)' }}>@sero117</div>
                   </div>
-                </motion.a>
-
-                <motion.a
-                  href="https://www.linkedin.com/in/sarah-salem-5a35783b2"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.3 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="flex items-center gap-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 hover:from-blue-100 hover:to-indigo-100 dark:hover:from-blue-800/30 dark:hover:to-indigo-800/30 transition-all duration-300 border border-blue-200/50 dark:border-blue-500/30 group"
-                >
-                  <div className="p-3 bg-blue-600 rounded-xl group-hover:scale-110 transition-transform">
-                    <Linkedin className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <div className="font-bold text-slate-900 dark:text-white">LinkedIn</div>
-                    <div className="text-slate-600 dark:text-gray-400 text-sm">Sarah Salem</div>
-                  </div>
-                </motion.a>
+                  <ExternalLink className="w-3.5 h-3.5 opacity-40 group-hover:opacity-80 transition-opacity" style={{ color: 'var(--text-secondary)' }} />
+                </a>
               </div>
             </div>
 
-            {/* CV Download */}
+            {/* CV */}
             <motion.a
               href="https://drive.google.com/file/d/104L4RxsPFV1uhMGjx5lquWZbtVtUJOgh/view?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              whileHover={{ scale: 1.02, boxShadow: "0 20px 40px rgba(168, 85, 247, 0.4)" }}
-              className="block bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 hover:from-purple-600 hover:via-pink-600 hover:to-blue-600 p-6 rounded-3xl transition-all duration-300 shadow-xl shadow-purple-500/25 group"
-            >
-              <div className="flex items-center justify-center gap-4">
-                <div className="p-3 bg-white/20 rounded-xl group-hover:scale-110 transition-transform">
-                  <Download className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-center">
-                  <div className="font-bold text-white text-xl">Download CV</div>
-                  <div className="text-purple-100 text-sm">View my resume</div>
-                </div>
-              </div>
+              target="_blank" rel="noopener noreferrer"
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              className="btn-primary py-4 justify-center text-base rounded-2xl">
+              <Download className="w-5 h-5" />
+              Download My CV
             </motion.a>
           </motion.div>
         </div>
@@ -234,4 +257,3 @@ export function Contact() {
     </section>
   )
 }
-

@@ -8,6 +8,13 @@ import { DataSection } from './components/DataSection'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { Hero3D } from './components/Hero3D'
+import { ArrowDown, Download, Eye, MapPin } from 'lucide-react'
+
+const stats = [
+  { value: '9+', label: 'Projects Delivered' },
+  { value: '3', label: 'Specializations' },
+  { value: '2+', label: 'Years Experience' },
+]
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true)
@@ -23,75 +30,153 @@ export default function App() {
   }, [darkMode])
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'bg-gradient-to-br from-black via-purple-950 to-black text-white' : 'bg-gradient-to-br from-slate-100 via-purple-200 to-white text-slate-900'}`}>
+    <div className="min-h-screen overflow-x-hidden">
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} />
+
       <main>
+        {/* ─── HERO SECTION ─── */}
         <section
           id="hero"
-          className="relative h-screen flex items-center justify-center overflow-hidden px-4 pt-24 pb-16"
+          className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 pt-24 pb-12"
         >
-          {/* Background layers */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-950/40 via-black to-blue-950/30 z-0" />
-          <div className="absolute inset-0 z-0 pointer-events-none bg-[radial-gradient(circle_at_30%_20%,rgba(192,132,252,0.25),transparent_45%),radial-gradient(circle_at_70%_30%,rgba(236,72,153,0.18),transparent_40%)]" />
+          {/* Light mode background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-violet-50/40 to-slate-100 dark:from-[#060d1f] dark:via-[#0d1535] dark:to-[#060d1f]" />
+          <div className="absolute inset-0 bg-grid-pattern opacity-60" />
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-[15%] left-[10%] w-72 h-72 bg-violet-400/10 dark:bg-violet-600/15 rounded-full blur-[100px]" />
+            <div className="absolute top-[35%] right-[8%] w-96 h-96 bg-cyan-400/10 dark:bg-cyan-500/10 rounded-full blur-[120px]" />
+            <div className="absolute bottom-[10%] left-[30%] w-60 h-60 bg-fuchsia-400/8 dark:bg-fuchsia-600/10 rounded-full blur-[80px]" />
+          </div>
 
-          <div className="relative z-10 w-full max-w-6xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
+          <div className="relative z-10 w-full max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
               {/* Left: text + CTA */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7 }}
-                className="text-center lg:text-left lg:col-span-1"
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                className="text-center lg:text-left"
               >
+                {/* Name */}
                 <motion.h1
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.8 }}
-                  className="text-4xl sm:text-5xl md:text-7xl lg:text-7xl font-black leading-tight"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2, duration: 0.8 }}
+                  className="text-5xl sm:text-6xl md:text-7xl font-black leading-[1.05] mb-3"
                 >
-                  <span className="bg-gradient-to-r from-white via-purple-200 to-pink-200 bg-clip-text text-transparent">
-                    SARAH SALEM
+                  <span className="bg-gradient-to-br from-slate-900 via-violet-800 to-fuchsia-700 dark:from-white dark:via-violet-100 dark:to-fuchsia-200 bg-clip-text text-transparent">
+                    Sarah Salem
                   </span>
                 </motion.h1>
 
-                {/* Small tag */}
+                {/* Title */}
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.15, duration: 0.6 }}
-                  className="mt-5 inline-flex items-center gap-3 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-xl"
+                  transition={{ delay: 0.3, duration: 0.7 }}
+                  className="text-xl sm:text-2xl font-semibold text-gradient-violet mb-5"
                 >
-                  <span className="inline-block w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-400" />
-                  <span className="text-sm font-semibold text-white/85">
-                    Portfolio • Mobile • Web • Data
-                  </span>
+                  Full Stack Developer & Data Analyst
                 </motion.div>
 
+                {/* Description */}
                 <motion.p
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.25, duration: 0.7 }}
-                  className="mt-5 text-lg sm:text-xl md:text-2xl text-slate-700 dark:text-gray-300 max-w-xl"
+                  transition={{ delay: 0.4, duration: 0.7 }}
+                  className="text-base sm:text-lg max-w-xl mx-auto lg:mx-0 leading-relaxed mb-4"
+                  style={{ color: 'var(--text-secondary)' }}
                 >
-                  I build clean, fast products across mobile apps, modern web, and data analytics.
+                  I build high-performance mobile apps, modern web platforms, and data-driven dashboards
+                  that help businesses grow and make smarter decisions.
                 </motion.p>
 
-                <div className="mt-7 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-            
-                </div>
+                {/* Location */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5, duration: 0.6 }}
+                  className="flex items-center gap-2 text-sm justify-center lg:justify-start mb-8"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <MapPin className="w-4 h-4 text-violet-500 flex-shrink-0" />
+                  <span>Open to <span className="text-violet-600 dark:text-violet-300 font-semibold">Remote & On-site</span> opportunities worldwide</span>
+                </motion.div>
 
-                {/* Compact highlights */}
-                <div className="mt-6 text-sm text-slate-700 dark:text-gray-300 max-w-xl">
-                  <span className="font-semibold text-white/85">Stack:</span> Flutter • React • Node • Data Analysis
-                </div>
+                {/* CTA Buttons */}
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.55, duration: 0.6 }}
+                  className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-10"
+                >
+                  <a href="#mobile" className="btn-primary text-center justify-center">
+                    <Eye className="w-4 h-4" />
+                    View My Work
+                  </a>
+                  <a
+                    href="https://drive.google.com/file/d/104L4RxsPFV1uhMGjx5lquWZbtVtUJOgh/view?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-outline text-center justify-center"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download CV
+                  </a>
+                </motion.div>
+
+                {/* Stats */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.65, duration: 0.7 }}
+                  className="flex gap-6 sm:gap-8 justify-center lg:justify-start"
+                >
+                  {stats.map((stat, i) => (
+                    <motion.div
+                      key={stat.label}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.7 + i * 0.1 }}
+                      className="text-center lg:text-left"
+                    >
+                      <div className="text-2xl sm:text-3xl font-black text-gradient-violet leading-none mb-1">
+                        {stat.value}
+                      </div>
+                      <div className="text-xs font-medium" style={{ color: 'var(--text-muted)' }}>{stat.label}</div>
+                    </motion.div>
+                  ))}
+                </motion.div>
               </motion.div>
 
-              {/* Right: 3D Hero */}
-              <div className="lg:col-span-1 flex items-center justify-center">
+              {/* Right: 3D Hero — hidden on small mobile to save space */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.9, ease: 'easeOut' }}
+                className="hidden sm:flex items-center justify-center"
+              >
                 <Hero3D />
-              </div>
+              </motion.div>
             </div>
           </div>
+
+          {/* Scroll indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          >
+            <span className="text-xs tracking-widest uppercase" style={{ color: 'var(--text-muted)' }}>Scroll Down</span>
+            <motion.div
+              animate={{ y: [0, 6, 0] }}
+              transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
+            >
+              <ArrowDown className="w-4 h-4 text-violet-500" />
+            </motion.div>
+          </motion.div>
         </section>
 
         <About />
