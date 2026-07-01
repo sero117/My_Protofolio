@@ -72,7 +72,7 @@ export function Navbar({ darkMode, setDarkMode }) {
           <div className="flex items-center justify-between py-2.5 px-4 sm:px-5">
 
             {/* Logo */}
-            <a href="#hero" onClick={close} className="flex items-center gap-2.5 group">
+            <a href="#hero" onClick={close} className="flex items-center group">
               <motion.div
                 whileHover={{ scale: 1.08, rotate: 4 }}
                 transition={{ type: 'spring', stiffness: 300 }}
@@ -80,12 +80,6 @@ export function Navbar({ darkMode, setDarkMode }) {
               >
                 <span className="text-white font-black text-sm">S</span>
               </motion.div>
-              <div className="flex flex-col leading-none">
-                <span className="text-sm font-black tracking-tight text-slate-900 dark:text-white">
-                  Sarah<span className="text-violet-500">.</span>
-                </span>
-                <span className="text-[9px] text-slate-400 dark:text-slate-500 font-medium tracking-wider">Portfolio</span>
-              </div>
             </a>
 
             {/* Desktop nav links */}

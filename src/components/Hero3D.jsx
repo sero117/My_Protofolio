@@ -54,9 +54,23 @@ function Key({ idx, width, litKeys }) {
 // ─── Main export ──────────────────────────────────────────────────────────────
 export function Hero3D() {
   const [isOpen,     setIsOpen]     = useState(false)
+  const [typed,      setTyped]      = useState('')
   const [powerFlash, setPowerFlash] = useState(false)
   const [litKeys,    setLitKeys]    = useState(() => new Set())
   const prevOpen = useRef(false)
+  const FULL_URL = 'sarah.portfolio.dev'
+
+  // Address-bar typewriter
+  useEffect(() => {
+    if (!isOpen) { setTyped(''); return }
+    let i = 0
+    const id = setInterval(() => {
+      i++
+      setTyped(FULL_URL.slice(0, i))
+      if (i >= FULL_URL.length) clearInterval(id)
+    }, 55)
+    return () => clearInterval(id)
+  }, [isOpen])
 
   // White power-on flash
   useEffect(() => {
@@ -145,7 +159,13 @@ export function Hero3D() {
                     <div className="w-2 h-2 rounded-full bg-emerald-500/80" />
                   </div>
                   <div className="flex-1 mx-2 h-3.5 rounded-md bg-white/[0.06] border border-white/[0.04] flex items-center px-2 gap-1 overflow-hidden">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-400/70 flex-shrink-0" />
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-400/70 flex-shrink-0" />
+                    <span className="text-[8px] text-violet-300/70 font-mono truncate">
+                      {isOpen ? typed : ''}
+                      {isOpen && typed.length < FULL_URL.length && (
+                        <span className="inline-block w-px h-2 bg-violet-300 ml-px animate-pulse" />
+                      )}
+                    </span>
                   </div>
                 </div>
 
@@ -322,6 +342,8 @@ export function Hero3D() {
                           <span className="w-1 h-1 rounded-full bg-emerald-400" />
                           Let's Work Together →
                         </motion.a>
+
+                        <p className="text-center text-[5.5px] text-white/10 tracking-widest uppercase">tap screen to close</p>
 
                       </motion.div>
                     )}
