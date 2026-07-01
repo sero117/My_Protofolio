@@ -16,7 +16,7 @@ const socials = [
   { href: 'https://wa.me/963998740489', icon: MessageCircle, label: 'WhatsApp' },
 ]
 
-const skills = ['Flutter', 'React', 'Node.js', 'Python', 'Power BI', 'Looker Studio', 'Tailwind CSS', 'MongoDB']
+const skills = ['Flutter', 'Dart', 'React', 'Node.js', 'Python', 'Power BI', 'Looker Studio', 'Tailwind CSS']
 
 export function Footer() {
   return (
