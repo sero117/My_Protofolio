@@ -72,6 +72,12 @@ export function Hero3D() {
     return () => clearInterval(id)
   }, [isOpen])
 
+  // Auto-open after 2 s so visitors see the animation without clicking
+  useEffect(() => {
+    const t = setTimeout(() => setIsOpen(true), 2000)
+    return () => clearTimeout(t)
+  }, [])
+
   // White power-on flash
   useEffect(() => {
     if (isOpen && !prevOpen.current) {
@@ -209,7 +215,7 @@ export function Hero3D() {
                           animate={{ opacity: [0.15, 0.5, 0.15] }}
                           transition={{ repeat: Infinity, duration: 2.6 }}
                         >
-                          Click to open
+                          Click to explore
                         </motion.p>
                       </motion.div>
                     )}
