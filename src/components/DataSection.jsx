@@ -1,117 +1,244 @@
-import { motion } from 'framer-motion'
-import { BarChart3, TrendingUp, Users, PieChart, ExternalLink, FileText, Database } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { BarChart3, TrendingUp, Users, PieChart, ExternalLink, FileText, Database, ChevronLeft, ChevronRight } from 'lucide-react'
 
-function DashboardMockup({ icon, title, color, stats }) {
+const BASE = import.meta.env.BASE_URL
+
+const ORDER_IMAGES = [
+  `${BASE}images/data-orders-excel-1.png`,
+  `${BASE}images/data-orders-excel-2.png`,
+  `${BASE}images/data-orders-excel-3.png`,
+  `${BASE}images/data-orders-python-1.png`,
+  `${BASE}images/data-orders-python-2.png`,
+  `${BASE}images/data-orders-python-3.png`,
+]
+
+const SALES_IMAGES = [
+  `${BASE}images/data-sales-powerbi-1.png`,
+  `${BASE}images/data-sales-powerbi-2.png`,
+  `${BASE}images/data-sales-powerbi-3.png`,
+  `${BASE}images/data-sales-powerbi-4.png`,
+]
+
+const EMPLOYEE_IMAGES = [
+  `${BASE}images/data-employee-powerbi.png`,
+]
+
+const LOOKER_IMAGES = [
+  `${BASE}images/data-projects-looker-1.png`,
+  `${BASE}images/data-projects-looker-2.png`,
+]
+
+// Tool brand colors for the chrome bar
+const TOOL_BRANDS = {
+  excel:   { label: 'Excel & Python', dot: '#22c55e',  bg: '#166534' },
+  powerbi: { label: 'Power BI',       dot: '#f59e0b',  bg: '#78350f' },
+  looker:  { label: 'Looker Studio',  dot: '#3b82f6',  bg: '#1e3a8a' },
+}
+
+// ── Dashboard image slider ────────────────────────────────────────────────────
+function DashboardSlider({ images, tool, url }) {
+  const [current,   setCurrent]   = useState(0)
+  const [direction, setDirection] = useState(1)
+  const [paused,    setPaused]    = useState(false)
+  const total = images.length
+  const brand = TOOL_BRANDS[tool] || TOOL_BRANDS.powerbi
+
+  useEffect(() => {
+    if (paused || total <= 1) return
+    const id = setInterval(() => {
+      setDirection(1)
+      setCurrent(c => (c + 1) % total)
+    }, 3200)
+    return () => clearInterval(id)
+  }, [paused, total])
+
+  const go = (dir) => {
+    setPaused(true)
+    setDirection(dir)
+    setCurrent(c => (c + dir + total) % total)
+    setTimeout(() => setPaused(false), 4000)
+  }
+
+  const slideVariants = {
+    enter:  (d) => ({ x: d > 0 ? '100%' : '-100%', opacity: 0  }),
+    center:       ({ x: 0,                           opacity: 1  }),
+    exit:   (d) => ({ x: d > 0 ? '-100%' : '100%', opacity: 0  }),
+  }
+
   return (
-    <div className="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-xl">
-      <div className="flex items-center gap-3 px-4 py-3 bg-slate-200 dark:bg-[#131c2e] border-b border-slate-300 dark:border-white/[0.07]">
-        <div className="flex gap-1.5">
-          <div className="w-2 h-2 rounded-full bg-red-400/70" />
-          <div className="w-2 h-2 rounded-full bg-amber-400/70" />
-          <div className="w-2 h-2 rounded-full bg-emerald-400/70" />
+    <div className="w-full rounded-2xl overflow-hidden border border-slate-200 dark:border-white/10 shadow-2xl shadow-slate-200/40 dark:shadow-black/50">
+      {/* Chrome bar */}
+      <div className="flex items-center gap-2.5 px-4 py-2.5 bg-slate-100 dark:bg-[#131c2e] border-b border-slate-200 dark:border-white/[0.07]">
+        <div className="flex gap-1.5 flex-shrink-0">
+          <div className="w-2.5 h-2.5 rounded-full bg-red-400/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-amber-400/70" />
+          <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/70" />
         </div>
-        <div className={`text-xs font-semibold ${color} ml-1`}>{title}</div>
+        {/* URL bar */}
+        <div className="flex-1 flex items-center gap-2 px-3 py-1 rounded-md bg-white dark:bg-white/[0.06] border border-slate-200 dark:border-white/10 min-w-0">
+          <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: brand.dot }} />
+          <span className="text-[10px] truncate font-medium" style={{ color: 'var(--text-muted)' }}>{url}</span>
+        </div>
+        {/* Tool badge + counter */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md text-white" style={{ background: brand.bg }}>
+            {brand.label}
+          </span>
+          {total > 1 && (
+            <span className="text-[10px] font-medium tabular-nums" style={{ color: 'var(--text-muted)' }}>
+              {current + 1}/{total}
+            </span>
+          )}
+        </div>
       </div>
-      <div className="p-5 bg-white dark:bg-[#0d1321]">
-        <div className="grid grid-cols-3 gap-2 mb-4">
-          {stats.map((s, i) => (
-            <div key={i} className="bg-slate-50 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.07] rounded-xl p-2.5 text-center">
-              <div className={`text-base font-black ${color}`}>{s.value}</div>
-              <div className="text-[9px] leading-tight mt-0.5" style={{ color: 'var(--text-muted)' }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-        <div className="bg-slate-50 dark:bg-white/[0.03] rounded-xl p-3 border border-slate-200 dark:border-white/[0.06]">
-          <div className="flex items-end gap-1.5 h-16 mb-1.5">
-            {[40, 65, 45, 80, 55, 90, 70, 60, 85, 50].map((h, i) => (
-              <div key={i} className="flex-1 rounded-sm"
+
+      {/* Image area */}
+      <div className="relative bg-slate-900 overflow-hidden" style={{ height: 260 }}>
+        <AnimatePresence mode="popLayout" custom={direction}>
+          <motion.img
+            key={current}
+            src={images[current]}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.35, ease: 'easeInOut' }}
+            className="absolute inset-0 w-full h-full object-cover object-top"
+            draggable={false}
+          />
+        </AnimatePresence>
+
+        {total > 1 && (
+          <>
+            <button
+              onClick={() => go(-1)}
+              className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-100 opacity-70"
+              style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+            >
+              <ChevronLeft className="w-4 h-4 text-white" />
+            </button>
+            <button
+              onClick={() => go(1)}
+              className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full flex items-center justify-center transition-opacity hover:opacity-100 opacity-70"
+              style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+            >
+              <ChevronRight className="w-4 h-4 text-white" />
+            </button>
+          </>
+        )}
+      </div>
+
+      {/* Progress bar + dots */}
+      {total > 1 && (
+        <div className="px-4 py-2.5 bg-slate-100 dark:bg-[#0d1321] border-t border-slate-200 dark:border-white/[0.06]">
+          <div className="w-full h-[2px] bg-slate-200 dark:bg-white/10 rounded-full overflow-hidden mb-2">
+            <motion.div
+              className="h-full rounded-full"
+              style={{ background: brand.dot }}
+              animate={{ width: `${((current + 1) / total) * 100}%` }}
+              transition={{ duration: 0.3 }}
+            />
+          </div>
+          <div className="flex justify-center gap-1.5">
+            {Array.from({ length: total }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => { setPaused(true); setDirection(i > current ? 1 : -1); setCurrent(i); setTimeout(() => setPaused(false), 4000) }}
+                className="rounded-full transition-all duration-300"
                 style={{
-                  height: `${h}%`,
-                  backgroundImage: `linear-gradient(to top, ${i % 2 === 0 ? 'rgba(124,58,237,0.6), rgba(167,139,250,0.35)' : 'rgba(6,182,212,0.5), rgba(34,211,238,0.3)'})`
+                  width:      i === current ? 20 : 6,
+                  height:     6,
+                  background: i === current ? brand.dot : 'var(--text-muted)',
+                  opacity:    i === current ? 1 : 0.4,
                 }}
               />
             ))}
           </div>
-          <div className="text-[9px] text-center" style={{ color: 'var(--text-muted)' }}>Analytics Overview</div>
         </div>
-        <div className="flex items-center justify-center mt-3 text-2xl">{icon}</div>
-      </div>
+      )}
     </div>
   )
 }
 
+// ── Project data ──────────────────────────────────────────────────────────────
 const projects = [
   {
     id: 'orders-analysis',
     title: 'Order Data Analysis',
-    subtitle: 'Sales & Customer Insights',
+    subtitle: 'Sales & Customer Insights — Excel & Python',
     driveLink: 'https://drive.google.com/file/d/1nM3JZwH13IFphZjyTwktvQrYKOcRKpFE/view?usp=sharing',
-    docsLink: 'https://docs.google.com/document/d/1L3I0cKipUL5nUjNqCLdLE33Rx27rTSlxjmtWllQk-2k/edit?usp=sharing',
+    docsLink:  'https://docs.google.com/document/d/1L3I0cKipUL5nUjNqCLdLE33Rx27rTSlxjmtWllQk-2k/edit?usp=sharing',
     accentColor: 'amber',
-    icon: '📊',
-    mockupStats: [{ value: 'Top 10', label: 'Best Sellers' }, { value: '12 Mo', label: 'Analyzed' }, { value: '4 Segs', label: 'Customers' }],
+    images: ORDER_IMAGES,
+    tool: 'excel',
+    url: 'excel · jupyter-notebook / order-analysis',
     features: [
-      { icon: TrendingUp, label: 'Top Products', desc: 'Top 10 best-selling items' },
-      { icon: BarChart3, label: 'Seasonal Trends', desc: 'Demand pattern analysis' },
-      { icon: Users, label: 'Segmentation', desc: 'High-frequency buyers' },
-      { icon: Database, label: 'Data Cleaning', desc: 'Python & Pandas pipeline' },
+      { icon: TrendingUp, label: 'Top Products',    desc: 'Top 10 best-selling items'      },
+      { icon: BarChart3,  label: 'Seasonal Trends', desc: 'Demand pattern analysis'        },
+      { icon: Users,      label: 'Segmentation',    desc: 'High-frequency buyer profiles'  },
+      { icon: Database,   label: 'Data Cleaning',   desc: 'Python & Pandas pipeline'       },
     ],
-    tech: ['Python', 'Pandas', 'Matplotlib', 'Excel'],
-    description: 'Deep-dive analysis of sales order data to identify the top 10 best-selling products, uncover seasonal demand patterns, and segment customers by purchasing behavior.',
+    tech: ['Python', 'Pandas', 'Matplotlib', 'Excel', 'VLOOKUP', 'SUMIFS'],
+    description: 'Full data analysis workflow — from cleaning raw customer records in Excel (VLOOKUP, SUMIFS, pivot charts) to visual insights with Python & Matplotlib. Identifies top-selling products, seasonal demand peaks, and high-value customer segments.',
   },
   {
     id: 'sales-dashboard',
     title: 'Sales Performance Dashboard',
     subtitle: 'Power BI Business Analytics',
-    pbiLink: 'https://drive.google.com/file/d/1pVe5L3C_STI3wDFv9oWSShvsDfz3gL9o/view?usp=sharing',
-    docsLink: 'https://docs.google.com/document/d/1cLvFkVKWZZG3xfXllSn88JZ6AAvFlEI7NMys1ZWdj0Q/edit?usp=sharing',
+    pbiLink:   'https://drive.google.com/file/d/1pVe5L3C_STI3wDFv9oWSShvsDfz3gL9o/view?usp=sharing',
+    docsLink:  'https://docs.google.com/document/d/1cLvFkVKWZZG3xfXllSn88JZ6AAvFlEI7NMys1ZWdj0Q/edit?usp=sharing',
     accentColor: 'violet',
-    icon: '📈',
-    mockupStats: [{ value: '2 Reg', label: 'Markets' }, { value: '↑ KPIs', label: 'Tracked' }, { value: '100%', label: 'Interactive' }],
+    images: SALES_IMAGES,
+    tool: 'powerbi',
+    url: 'app.powerbi.com / sales-performance-dashboard',
     features: [
-      { icon: PieChart, label: 'Category Breakdown', desc: 'Product market share' },
-      { icon: TrendingUp, label: 'Regional Sales', desc: 'Cairo & Beirut markets' },
-      { icon: Users, label: 'Gender Insights', desc: 'Profit margin by segment' },
-      { icon: BarChart3, label: 'KPI Tracking', desc: 'Business growth metrics' },
+      { icon: PieChart,   label: 'Revenue Trends',  desc: 'Monthly & branch comparison'   },
+      { icon: TrendingUp, label: 'Branch KPIs',      desc: 'Multi-branch performance view' },
+      { icon: BarChart3,  label: 'Supermarket Sales', desc: 'Product & category breakdown' },
+      { icon: Database,   label: 'DAX Measures',     desc: 'Custom calculated metrics'     },
     ],
     tech: ['Power BI', 'DAX', 'Data Modeling', 'Business Intelligence'],
-    description: 'Interactive Power BI dashboard delivering actionable sales insights across product categories, regional markets, and demographic segments to drive strategic decisions.',
+    description: 'Interactive Power BI dashboards delivering revenue breakdowns across branches and months, product category performance, and supermarket sales trends — with dynamic slicers for filtered deep-dives.',
   },
   {
     id: 'employee-report',
     title: 'Employee Report Dashboard',
-    subtitle: 'HR Analytics & Workforce Insights',
-    pbiLink: 'https://drive.google.com/file/d/1mJafseEdakD6jfhCUtQdtp4Nw19CnyiU/view?usp=sharing',
-    docsLink: 'https://docs.google.com/document/d/1VxUzC6eRQOC5miFE5kY0KX371qFMvArY/view?usp=sharing',
+    subtitle: 'HR Analytics & Workforce Insights — Power BI',
+    pbiLink:   'https://drive.google.com/file/d/1mJafseEdakD6jfhCUtQdtp4Nw19CnyiU/view?usp=sharing',
+    docsLink:  'https://docs.google.com/document/d/1VxUzC6eRQOC5miFE5kY0KX371qFMvArY/view?usp=sharing',
     accentColor: 'cyan',
-    icon: '👥',
-    mockupStats: [{ value: '156', label: 'Employees' }, { value: 'Multi', label: 'Regions' }, { value: 'HR KPIs', label: 'Tracked' }],
+    images: EMPLOYEE_IMAGES,
+    tool: 'powerbi',
+    url: 'app.powerbi.com / employee-report-dashboard',
     features: [
-      { icon: Users, label: 'Workforce Map', desc: 'Multi-country distribution' },
-      { icon: BarChart3, label: 'Salary Metrics', desc: 'Compensation analysis' },
-      { icon: TrendingUp, label: 'Hiring Trends', desc: 'Growth over time' },
-      { icon: PieChart, label: 'Dept Insights', desc: 'Department breakdown' },
+      { icon: Users,      label: 'Workforce Map',   desc: 'Multi-country distribution'   },
+      { icon: BarChart3,  label: 'Dept Breakdown',  desc: 'Count by department & gender' },
+      { icon: TrendingUp, label: 'Hiring Trends',   desc: 'Employee growth over years'   },
+      { icon: PieChart,   label: 'Salary Metrics',  desc: 'Avg monthly salary by region' },
     ],
     tech: ['Power BI', 'HR Analytics', 'Data Visualization', 'DAX'],
-    description: 'Comprehensive HR analytics dashboard analyzing 156 employees across multiple regions — covering salary distribution, workforce diversity, and hiring patterns.',
+    description: 'Comprehensive HR analytics dashboard analyzing 156 employees across 5 countries (Egypt, Lebanon, Saudi Arabia, Syria, UAE) — with department counts, salary KPIs, gender ratios, and hiring trend lines filterable by country and center.',
   },
   {
-    id: 'trip-service',
-    title: 'Trip Report & Quality of Service',
-    subtitle: 'Transportation Analytics — Looker Studio',
+    id: 'projects-reports',
+    title: 'Projects & Service Reports',
+    subtitle: 'Looker Studio — Business Intelligence',
     lookerLink: 'https://lookerstudio.google.com/s/jsnGNkbMr0o',
-    docsLink: 'https://docs.google.com/document/d/1wc13XQVHsNI4X7lvznmys5STc9Xhd1zqUjLvPZ2m1b0/edit?usp=sharing',
+    docsLink:   'https://docs.google.com/document/d/1wc13XQVHsNI4X7lvznmys5STc9Xhd1zqUjLvPZ2m1b0/edit?usp=sharing',
     accentColor: 'emerald',
-    icon: '🚗',
-    mockupStats: [{ value: '32%', label: 'Cancel Rate' }, { value: '3 Types', label: 'Vehicles' }, { value: 'Live', label: 'Dashboard' }],
+    images: LOOKER_IMAGES,
+    tool: 'looker',
+    url: 'lookerstudio.google.com / projects-dashboard',
     features: [
-      { icon: BarChart3, label: 'Ride Volume', desc: 'Total rides & completion' },
-      { icon: TrendingUp, label: 'Cancellation', desc: '32.18% root-cause analysis' },
-      { icon: Database, label: 'Fleet Analysis', desc: 'Vehicle type performance' },
-      { icon: PieChart, label: 'Service Quality', desc: 'Customer satisfaction KPIs' },
+      { icon: BarChart3,  label: 'Project KPIs',    desc: '85M value, 580 shipments'      },
+      { icon: TrendingUp, label: 'World Map',        desc: 'Global project distribution'   },
+      { icon: Database,   label: 'Sales Analytics',  desc: 'Revenue & trip performance'    },
+      { icon: PieChart,   label: 'Quality Metrics',  desc: 'Cancellation & service rates'  },
     ],
     tech: ['Looker Studio', 'Google Analytics', 'Data Visualization', 'BigQuery'],
-    description: 'Transportation operations dashboard analyzing ride volumes, 32.18% cancellation rate root causes, and vehicle performance to optimize fleet service quality.',
+    description: 'Two Looker Studio dashboards — a Projects Data Dashboard tracking 5 major projects with budget, delivery rates, and a world map distribution view; plus a service quality report analyzing ride volumes and cancellation root causes.',
   },
 ]
 
@@ -121,13 +248,8 @@ const iconTextColor = {
   cyan:    'text-cyan-600 dark:text-cyan-400',
   emerald: 'text-emerald-600 dark:text-emerald-400',
 }
-const mockupColor = {
-  amber:   'text-amber-600 dark:text-amber-400',
-  violet:  'text-violet-600 dark:text-violet-400',
-  cyan:    'text-cyan-600 dark:text-cyan-400',
-  emerald: 'text-emerald-600 dark:text-emerald-400',
-}
 
+// ── Section ───────────────────────────────────────────────────────────────────
 export function DataSection() {
   return (
     <section id="data" className="py-32 px-4 relative overflow-hidden">
@@ -166,6 +288,7 @@ export function DataSection() {
                 transition={{ duration: 0.7, delay: idx * 0.06 }}
                 className={`grid lg:grid-cols-2 gap-10 items-center ${isReversed ? 'lg:grid-flow-col-dense' : ''}`}
               >
+                {/* Info card */}
                 <div className={isReversed ? 'lg:col-start-2' : ''}>
                   <div className="card-glow p-8 rounded-2xl flex flex-col gap-6">
                     <div>
@@ -222,18 +345,18 @@ export function DataSection() {
                   </div>
                 </div>
 
+                {/* Dashboard slider */}
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={{ opacity: 0, scale: 0.92 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.7, delay: 0.15 }}
-                  className={`${isReversed ? 'lg:col-start-1' : ''} animate-float-delayed`}
+                  className={isReversed ? 'lg:col-start-1' : ''}
                 >
-                  <DashboardMockup
-                    icon={project.icon}
-                    title={project.title}
-                    color={mockupColor[project.accentColor]}
-                    stats={project.mockupStats}
+                  <DashboardSlider
+                    images={project.images}
+                    tool={project.tool}
+                    url={project.url}
                   />
                 </motion.div>
               </motion.div>
