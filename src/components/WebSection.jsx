@@ -145,6 +145,26 @@ const PHARMACY_IMAGES = [
   `${BASE}images/Pharmacy4.png`,
 ]
 
+const GAMESTORE_IMAGES = [
+  `${BASE}images/game-web1.png`,
+  `${BASE}images/game-web2.png`,
+  `${BASE}images/game-web3.png`,
+  `${BASE}images/game-web4.png`,
+  `${BASE}images/game-web5.png`,
+  `${BASE}images/game-web6.png`,
+  `${BASE}images/game-web8.png`,
+  `${BASE}images/game-web17.png`,
+]
+
+const REALESTATE_IMAGES = [
+  `${BASE}images/Screenshot (484).png`,
+  `${BASE}images/Screenshot (485).png`,
+  `${BASE}images/Screenshot (486).png`,
+  `${BASE}images/Screenshot (487).png`,
+  `${BASE}images/Screenshot (488).png`,
+  `${BASE}images/Screenshot (489).png`,
+]
+
 const projects = [
   {
     id: 'pharmacy',
@@ -173,8 +193,9 @@ const projects = [
     website: 'https://sero117.github.io/GameStore_Web/',
     github: 'https://github.com/sero117/GameStore_Web.git',
     accentColor: 'cyan',
-    browserClass: 'bg-cyan-300 dark:bg-cyan-500/20',
-    images: null,
+    browserClass: 'bg-cyan-500/70 dark:bg-cyan-500/40',
+    browserUrl: 'sero117.github.io/GameStore_Web',
+    images: GAMESTORE_IMAGES,
     icon: '🎮',
     features: [
       { icon: Code,     label: 'Vanilla JS',   desc: 'Pure JavaScript, no framework' },
@@ -192,8 +213,9 @@ const projects = [
     website: 'https://sero117.github.io/Real_Estate/',
     github: 'https://github.com/sero117/Real_Estate.git',
     accentColor: 'emerald',
-    browserClass: 'bg-emerald-300 dark:bg-emerald-500/20',
-    images: null,
+    browserClass: 'bg-emerald-500/70 dark:bg-emerald-500/40',
+    browserUrl: 'sero117.github.io/Real_Estate',
+    images: REALESTATE_IMAGES,
     icon: '🏠',
     features: [
       { icon: Home,     label: 'Property Listings', desc: 'Houses & apartments'    },
