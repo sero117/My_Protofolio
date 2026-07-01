@@ -9,13 +9,13 @@ const skillCategories = [
     label: 'Mobile Development',
     color: 'emerald',
     icon: Smartphone,
-    skills: ['Flutter', 'Dart', 'GetX', 'Provider', 'REST APIs', 'Socket.io', 'Google Maps', 'SQLite'],
+    skills: ['Flutter', 'Dart', 'GetX', 'Provider', 'REST APIs', 'Socket.io', 'Google Maps', 'Dio'],
   },
   {
     label: 'Web Development',
     color: 'violet',
     icon: Globe,
-    skills: ['React.js', 'Node.js', 'JavaScript', 'HTML5 / CSS3', 'Tailwind CSS', 'Three.js', 'MongoDB', 'Stripe'],
+    skills: ['React.js', 'Node.js', 'JavaScript', 'HTML5 / CSS3', 'Tailwind CSS', 'REST APIs'],
   },
   {
     label: 'Data Analysis',
@@ -78,21 +78,48 @@ export function About() {
 
           {/* Professional Summary */}
           <motion.div {...fade(0.1)} className="md:col-span-2 card-glow p-7 rounded-2xl">
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-              <span className="w-1.5 h-5 bg-gradient-to-b from-violet-500 to-fuchsia-500 rounded-full inline-block" />
-              Professional Summary
-            </h3>
-            <p className="leading-relaxed text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
-              I'm a full-stack software engineer and certified data analyst, currently seeking
-              new opportunities. I specialize in building cross-platform mobile apps with Flutter,
-              scalable web applications with React & Node.js, and turning complex data into clear business insights
-              using Python, Power BI, and Looker Studio.
-            </p>
-            <p className="leading-relaxed text-sm" style={{ color: 'var(--text-muted)' }}>
-              I have a strong problem-solving mindset and I'm passionate about writing clean, maintainable code.
-              I leverage modern AI tools to accelerate development cycles and deliver higher-quality products faster.
-            </p>
-            <div className="flex flex-wrap gap-2 mt-5">
+            <div className="flex flex-col sm:flex-row gap-6 mb-5">
+              {/* Profile photo */}
+              <div className="flex-shrink-0 flex flex-col items-center gap-2">
+                <div className="relative">
+                  <div className="w-28 h-28 rounded-2xl overflow-hidden ring-4 ring-violet-500/20 shadow-xl shadow-violet-500/10">
+                    <img
+                      src={`${import.meta.env.BASE_URL}images/my_picture.jpg`}
+                      alt="Sarah Salem"
+                      className="w-full h-full object-cover object-top"
+                    />
+                  </div>
+                  <div className="absolute -bottom-2 -right-2 w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-md">
+                    <span className="text-white font-black text-[10px]">S</span>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold"
+                  style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)', color: '#34d399' }}>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  Open to Work
+                </div>
+              </div>
+
+              {/* Summary text */}
+              <div className="flex-1">
+                <h3 className="text-lg font-bold mb-3 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
+                  <span className="w-1.5 h-5 bg-gradient-to-b from-violet-500 to-fuchsia-500 rounded-full inline-block" />
+                  Professional Summary
+                </h3>
+                <p className="leading-relaxed text-sm mb-3" style={{ color: 'var(--text-secondary)' }}>
+                  I'm a full-stack software engineer and certified data analyst, currently seeking
+                  new opportunities. I specialize in building cross-platform mobile apps with Flutter,
+                  scalable web applications with React & Node.js, and turning complex data into clear business insights
+                  using Python, Power BI, and Looker Studio.
+                </p>
+                <p className="leading-relaxed text-sm" style={{ color: 'var(--text-muted)' }}>
+                  I have a strong problem-solving mindset and I'm passionate about writing clean, maintainable code.
+                  I leverage modern AI tools to accelerate development cycles and deliver higher-quality products faster.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
               {['Problem Solver', 'Clean Code Advocate', 'Fast Learner', 'Team Player', 'Detail-Oriented'].map(t => (
                 <span key={t} className="flex items-center gap-1.5 tag-violet text-xs">
                   <CheckCircle2 className="w-3 h-3" /> {t}
