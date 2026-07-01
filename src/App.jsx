@@ -150,7 +150,7 @@ export default function App() {
                 </motion.div>
               </motion.div>
 
-              {/* Right: 3D Hero — hidden on small mobile to save space */}
+              {/* Right: laptop — sm and up */}
               <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -158,6 +158,70 @@ export default function App() {
                 className="hidden sm:flex items-center justify-center"
               >
                 <Hero3D />
+              </motion.div>
+
+              {/* Right: mobile profile card — xs only */}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.7 }}
+                className="sm:hidden w-full"
+              >
+                <div className="card-glow rounded-2xl p-5 text-center max-w-xs mx-auto">
+                  {/* Photo */}
+                  <div className="relative inline-block mb-3">
+                    <div className="w-24 h-24 rounded-2xl overflow-hidden ring-4 ring-violet-500/20 shadow-xl shadow-violet-500/10 mx-auto">
+                      <img
+                        src={`${import.meta.env.BASE_URL}images/my_picture.jpg`}
+                        alt="Sarah Salem"
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                    <div className="absolute -bottom-1.5 -right-1.5 w-7 h-7 rounded-full bg-gradient-to-br from-violet-500 to-fuchsia-500 flex items-center justify-center shadow-md">
+                      <span className="text-white font-black text-[10px]">S</span>
+                    </div>
+                  </div>
+
+                  {/* Open to work */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold mb-3"
+                    style={{ background: 'rgba(52,211,153,0.1)', border: '1px solid rgba(52,211,153,0.25)', color: '#34d399' }}>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    Open to Work
+                  </div>
+
+                  {/* Skill tags */}
+                  <div className="flex flex-wrap gap-1.5 justify-center mb-4">
+                    {[
+                      { label: '⚡ Flutter', color: '#67e8f9' },
+                      { label: '⚛ React',   color: '#93c5fd' },
+                      { label: '🐍 Python',  color: '#fcd34d' },
+                      { label: '📊 Power BI',color: '#f9a8d4' },
+                      { label: '🟢 Node.js', color: '#86efac' },
+                    ].map(sk => (
+                      <span key={sk.label} className="text-[11px] px-2.5 py-1 rounded-lg font-semibold"
+                        style={{ background: 'rgba(255,255,255,0.05)', color: sk.color, border: '1px solid rgba(255,255,255,0.1)' }}>
+                        {sk.label}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Quick nav */}
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { icon: '📱', label: 'Mobile', sub: '2 Apps',  href: '#mobile', bg: 'rgba(52,211,153,0.12)',  border: 'rgba(52,211,153,0.25)'  },
+                      { icon: '🌐', label: 'Web',    sub: '3 Sites', href: '#web',    bg: 'rgba(139,92,246,0.12)', border: 'rgba(139,92,246,0.25)'  },
+                      { icon: '📊', label: 'Data',   sub: '4 Dash',  href: '#data',   bg: 'rgba(251,191,36,0.12)', border: 'rgba(251,191,36,0.25)'  },
+                    ].map(s => (
+                      <a key={s.label} href={s.href}
+                        className="flex flex-col items-center gap-0.5 py-2.5 rounded-xl text-center transition-opacity hover:opacity-80"
+                        style={{ background: s.bg, border: `1px solid ${s.border}` }}>
+                        <span className="text-xl">{s.icon}</span>
+                        <span className="text-[11px] font-bold" style={{ color: 'var(--text-primary)' }}>{s.label}</span>
+                        <span className="text-[9px]" style={{ color: 'var(--text-muted)' }}>{s.sub}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </motion.div>
             </div>
           </div>
